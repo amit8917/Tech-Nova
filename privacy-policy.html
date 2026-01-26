@@ -3,50 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Privacy Policy - Tech Nova. Learn how we collect, use, and protect your personal information on our technology blog.">
-    <meta name="keywords" content="privacy policy, data protection, tech nova privacy, user data, GDPR compliance">
-    <meta name="author" content="Tech Nova">
+    <meta name="description" content="Privacy Policy - Respawn Daily. Learn how we collect, use, and protect your personal information on our gaming and news website.">
+    <meta name="keywords" content="privacy policy, data protection, respawn daily privacy, user data, gaming news privacy, GDPR compliance">
+    <meta name="author" content="Respawn Daily">
     
-    <title>Privacy Policy - Tech Nova</title>
+    <title>Privacy Policy - Respawn Daily</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Custom Styles -->
     <style>
-        /* Dark mode variables */
+        /* Respawn Daily Theme Variables */
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9fafb;
-            --bg-tertiary: #f3f4f6;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-            --text-tertiary: #9ca3af;
-            --border-color: #e5e7eb;
+            --bg-primary: #fef3c7;
+            --bg-secondary: #fef9e7;
+            --bg-tertiary: #fef5d6;
+            --text-primary: #1e293b;
+            --text-secondary: #374151;
+            --text-tertiary: #6b7280;
+            --border-color: #f59e0b;
             --card-bg: #ffffff;
             --header-bg: #ffffff;
-            --footer-bg: #111827;
-            --footer-text: #9ca3af;
-            --accent-color: #6366f1;
-            --accent-hover: #4f46e5;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --footer-bg: #1e293b;
+            --footer-text: #fef3c7;
+            --accent-color: #dc2626;
+            --accent-hover: #b91c1c;
+            --shadow-color: rgba(245, 158, 11, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --glass-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);
         }
         
         [data-theme="dark"] {
             --bg-primary: #0c111d;
             --bg-secondary: #161d2e;
             --bg-tertiary: #1e293b;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --text-tertiary: #64748b;
-            --border-color: #2d3748;
+            --text-primary: #fef3c7;
+            --text-secondary: #fef9e7;
+            --text-tertiary: #fef5d6;
+            --border-color: #f59e0b;
             --card-bg: #161d2e;
             --header-bg: #0c111d;
             --footer-bg: #0c111d;
-            --footer-text: #94a3b8;
-            --accent-color: #818cf8;
-            --accent-hover: #6366f1;
-            --shadow-color: rgba(0, 0, 0, 0.3);
+            --footer-text: #fef3c7;
+            --accent-color: #dc2626;
+            --accent-hover: #b91c1c;
+            --shadow-color: rgba(220, 38, 38, 0.3);
+            --glass-bg: rgba(12, 17, 29, 0.85);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --glass-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);
         }
         
         body {
@@ -60,6 +66,21 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.15);
         }
         
         .card {
@@ -97,27 +118,49 @@
         [data-theme="dark"] footer {
             background-color: var(--footer-bg) !important;
         }
+        
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 80px !important;
+        }
+        
+        .glass-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: var(--glass-shadow);
+        }
     </style>
 </head>
-<body data-theme="light" class="bg-gray-50">
+<body data-theme="light">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50" style="background-color: var(--header-bg);">
+    <header class="glass-header fixed top-0 left-0 right-0 z-50" style="position: fixed !important;">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
-                        <rect x="4" y="6" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <rect x="6" y="8" width="12" height="8" rx="1" fill="currentColor" opacity="0.2"/>
-                        <circle cx="12" cy="12" r="2" fill="white"/>
-                        <path d="M8 10h8M8 14h8" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <circle cx="8" cy="4" r="1" fill="currentColor"/>
-                        <circle cx="12" cy="4" r="1" fill="currentColor"/>
-                        <circle cx="16" cy="4" r="1" fill="currentColor"/>
-                        <path d="M10 20l2-2 2 2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                        <circle cx="7" cy="12" r="0.5" fill="currentColor" opacity="0.8"/>
-                        <circle cx="17" cy="12" r="0.5" fill="currentColor" opacity="0.8"/>
+                <div class="flex items-center space-x-3">
+                    <svg class="w-10 h-10 flex-shrink-0" viewBox="0 0 24 24">
+                        <!-- Gaming controller/respawn inspired logo -->
+                        <rect x="4" y="8" width="16" height="8" rx="2" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                        <!-- D-pad -->
+                        <circle cx="8" cy="12" r="1.5" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+                        <line x1="8" y1="10.5" x2="8" y2="13.5" stroke="#f59e0b" stroke-width="1.5"/>
+                        <line x1="6.5" y1="12" x2="9.5" y2="12" stroke="#f59e0b" stroke-width="1.5"/>
+                        <!-- Action buttons -->
+                        <circle cx="16" cy="10" r="1" fill="#dc2626"/>
+                        <circle cx="14" cy="12" r="1" fill="#dc2626"/>
+                        <circle cx="16" cy="14" r="1" fill="#dc2626"/>
+                        <!-- News symbol -->
+                        <circle cx="12" cy="4" r="1.5" fill="#f59e0b"/>
+                        <path d="M11 3h2v2h-2z" fill="#1e293b"/>
+                        <path d="M10.5 4.5h3v1h-3z" fill="#1e293b"/>
+                        <!-- Respawn arrows -->
+                        <path d="M10 20l2-2 2 2" stroke="#dc2626" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path d="M8 18l2-2 2 2" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
                     </svg>
-                    <a href="index.html" class="text-2xl font-bold gradient-text">Tech Nova</a>
+                    <h3 class="text-xl font-bold" style="color: var(--border-color); line-height: 1; margin: 0;">Respawn Daily</h3>
                 </div>
                 
                 <div class="flex items-center space-x-6">
@@ -134,7 +177,7 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-12 max-w-4xl">
-        <div class="card rounded-lg shadow-lg p-8 mb-8">
+        <div class="glass-card rounded-lg shadow-lg p-8 mb-8">
             <h1 class="text-4xl font-bold mb-6 gradient-text">Privacy Policy</h1>
             <p class="text-gray-600 mb-8" style="color: var(--text-secondary);">
                 Last updated: January 2024
@@ -142,10 +185,10 @@
             
             <div class="prose max-w-none">
                 <section class="mb-8">
-                    <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Introduction</h2>
+                    <h2 class="text-2xl font-semibold mb-4" style="color: var(--accent-color);">Introduction</h2>
                     <p class="text-gray-700 mb-4" style="color: var(--text-primary);">
-                        Welcome to Tech Nova! We respect your privacy and are committed to protecting your personal data. 
-                        This privacy policy explains how we collect, use, and protect your information when you visit our technology blog.
+                        Welcome to Respawn Daily! We respect your privacy and are committed to protecting your personal data. 
+                        This privacy policy explains how we collect, use, and protect your information when you visit our gaming and news website.
                     </p>
                 </section>
 
@@ -201,7 +244,7 @@
                 <section class="mb-8">
                     <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Third-Party Services</h2>
                     <p class="text-gray-700 mb-4" style="color: var(--text-primary);">
-                        Tech Nova uses third-party services that may collect data:
+                        Respawn Daily uses third-party services that may collect data:
                     </p>
                     <ul class="list-disc pl-6 space-y-2 text-gray-700" style="color: var(--text-primary);">
                         <li><strong>Google Analytics:</strong> For website analytics and insights</li>
@@ -241,7 +284,7 @@
                 <section class="mb-8">
                     <h2 class="text-2xl font-semibold mb-4 text-indigo-600">Children's Privacy</h2>
                     <p class="text-gray-700 mb-4" style="color: var(--text-primary);">
-                        Tech Nova is not intended for children under 13. We do not knowingly collect 
+                        Respawn Daily is not intended for children under 13. We do not knowingly collect 
                         personal information from children under 13. If we become aware of such collection, 
                         we will take immediate steps to delete this information.
                     </p>
@@ -285,7 +328,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Back to Tech Nova
+                Back to Respawn Daily
             </a>
         </div>
     </main>
@@ -294,7 +337,7 @@
     <footer class="bg-gray-900 text-white py-8 mt-16" style="background-color: var(--footer-bg); color: var(--footer-text);">
         <div class="container mx-auto px-4 text-center">
             <p class="text-gray-400" style="color: var(--footer-text);">
-                &copy; 2024 Tech Nova. All rights reserved.
+                &copy; 2024 Respawn Daily. All rights reserved.
             </p>
         </div>
     </footer>

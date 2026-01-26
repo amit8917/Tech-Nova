@@ -953,25 +953,26 @@
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 16px;
-            box-shadow: var(--glass-shadow);
-        }
         
-        .glass-footer {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: var(--glass-shadow);
-        }
+.glass-footer {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+}
         
-        .glass-button {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+.glass-button {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: var(--glass-shadow);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
             border-radius: 12px;
             box-shadow: var(--glass-shadow);
             color: var(--text-primary);
@@ -1280,6 +1281,54 @@
         #subscribeModal button:not(.youtube-subscribe) {
             border-color: var(--bg-tertiary) !important;
         }
+        
+        /* India News Button Animation */
+        .india-news-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .india-news-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #ff9933 25%, 
+                #ffffff 50%, 
+                #138808 75%, 
+                transparent 100%);
+            transition: left 0.8s ease-in-out;
+            z-index: 1;
+        }
+        
+        .india-news-btn:hover::before {
+            left: 100%;
+        }
+        
+        .india-news-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
+        }
+        
+        .india-news-btn span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Flag wave animation */
+        @keyframes flagWave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+        }
+        
+        .india-news-btn:hover .flag-emoji {
+            animation: flagWave 0.5s ease-in-out infinite;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -1359,6 +1408,22 @@
         </nav>
     </header>
 
+    <!-- Event Banner Section -->
+    <section id="eventBanner" class="py-8" style="background-color: var(--bg-primary);">
+        <div class="container mx-auto px-4">
+            <div class="glass-card rounded-xl p-6 text-center">
+                <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">📸 Current Events & Featured Stories</h3>
+                <div class="event-photo-container">
+                    <img src="https://as2.ftcdn.net/v2/jpg/01/66/75/81/1000_F_166758145_IRLnFtzsVAbPayPc9f8dKkPbNpu8xga5.jpg" alt="India Republic Day 2026" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                    <div class="mt-4">
+                        <p class="text-lg font-semibold" style="color: var(--text-primary);">🇮🇳 Featured Event: India's 77th Republic Day - January 26, 2026</p>
+                        <p class="text-sm mt-2" style="color: var(--text-secondary);">Join us in celebrating India's 77th Republic Day! Honoring the day when the Constitution of India came into effect in 1950. Jai Hind! 🎉</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Hero Section -->
     <section id="home" class="bg-gradient-to-br from-accent via-accent-2 to-accent-3 text-white py-20">
         <div class="container mx-auto px-4">
@@ -1394,6 +1459,9 @@
                     </button>
                     <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                         ⚽ Sports
+                    </button>
+                    <button onclick="openIndiaNewsModal()" class="premium-button india-news-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ff9933, #ff6600); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                        <span class="flag-emoji">🇮🇳</span> India News
                     </button>
                 </div>
             </div>
@@ -1785,6 +1853,74 @@
         </div>
     </div>
 
+    <!-- India News Modal -->
+    <div id="indiaNewsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--card-bg);">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold" style="color: var(--text-primary);">🇮🇳 Post India News</h3>
+                    <button onclick="closeIndiaNewsModal()" style="color: var(--text-secondary);" class="hover:text-accent transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="indiaNewsForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">News Title *</label>
+                        <input type="text" id="indiaNewsTitle" required class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" placeholder="Enter news headline...">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">News Category *</label>
+                        <select id="indiaNewsCategory" required class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);">
+                            <option value="">Select category...</option>
+                            <option value="Politics">Politics</option>
+                            <option value="Business">Business</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Health">Health</option>
+                            <option value="Education">Education</option>
+                            <option value="Defense">Defense</option>
+                            <option value="Culture">Culture</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">News Summary *</label>
+                        <textarea id="indiaNewsSummary" required rows="4" class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" placeholder="Brief summary of the news..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">Full News Content *</label>
+                        <textarea id="indiaNewsContent" required rows="6" class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" placeholder="Complete news article..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">News Source</label>
+                        <input type="text" id="indiaNewsSource" class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" placeholder="Source of the news (optional)">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">City/State</label>
+                        <input type="text" id="indiaNewsLocation" class="w-full px-4 py-2 rounded-lg focus:ring-2" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" placeholder="e.g., Delhi, Maharashtra, etc.">
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeIndiaNewsModal()" class="px-4 py-2 rounded-lg transition-colors" style="border-color: var(--border-color); color: var(--text-primary); background-color: var(--bg-secondary);">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 rounded-lg text-white transition-colors" style="background: linear-gradient(135deg, #ff9933, #ff6600);">
+                            🇮🇳 Post India News
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Suggestion Modal -->
     <div id="suggestionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
         <div class="rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--card-bg);">
@@ -1911,6 +2047,57 @@
             // Show notification
             showNotification('🎉 Successfully subscribed! You will receive updates at ' + email, 'success');
         }
+        
+        // India News Modal Functions
+        function openIndiaNewsModal() {
+            const modal = document.getElementById('indiaNewsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeIndiaNewsModal() {
+            const modal = document.getElementById('indiaNewsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // India News Form Submission
+        document.getElementById('indiaNewsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('indiaNewsTitle').value;
+            const category = document.getElementById('indiaNewsCategory').value;
+            const summary = document.getElementById('indiaNewsSummary').value;
+            const content = document.getElementById('indiaNewsContent').value;
+            const source = document.getElementById('indiaNewsSource').value;
+            const location = document.getElementById('indiaNewsLocation').value;
+
+            // Create India news object
+            const indiaNews = {
+                title: title,
+                category: category,
+                summary: summary,
+                content: content,
+                source: source,
+                location: location,
+                timestamp: new Date().toISOString(),
+                type: 'India News'
+            };
+
+            // Save to localStorage
+            let indiaNewsList = JSON.parse(localStorage.getItem('indiaNews') || '[]');
+            indiaNewsList.push(indiaNews);
+            localStorage.setItem('indiaNews', JSON.stringify(indiaNewsList));
+            
+            // Show success message
+            showNotification('🇮🇳 India news posted successfully! Your article has been saved.', 'success');
+            
+            // Reset form and close modal
+            document.getElementById('indiaNewsForm').reset();
+            closeIndiaNewsModal();
+        });
         
         // Suggestion Modal Functions
         function openSuggestionModal() {
