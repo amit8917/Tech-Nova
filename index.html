@@ -938,6 +938,10 @@
         .mobile-menu.active {
             transform: translateX(0);
         }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
@@ -1191,6 +1195,11 @@
             padding-bottom: 0 !important;
         }
 
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 80px !important;
+        }
+
         /* Bring the hero title closer to the header */
         #home {
             padding-top: 1.5rem !important; /* was large (py-20) */
@@ -1275,7 +1284,7 @@
 </head>
 <body data-theme="light">
     <!-- Header -->
-    <header class="glass-header sticky top-0 z-50">
+    <header class="glass-header fixed top-0 left-0 right-0 z-50" style="position: fixed !important;">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-3">
@@ -1306,7 +1315,7 @@
                     <div class="hidden md:flex items-center space-x-6">
                         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-text-primary hover:text-accent transition-colors">Home</a>
                         <a href="#latest" class="text-text-primary hover:text-accent transition-colors">Latest</a>
-                                            </div>
+                    </div>
                     <div class="hidden md:flex items-center space-x-3">
                         <button onclick="openSuggestionModal()" class="suggestion-btn px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
                             💡 Suggestion
@@ -1338,7 +1347,7 @@
                     <div class="flex flex-col space-y-4">
                         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-text-primary hover:text-accent transition-colors">Home</a>
                         <a href="#latest" class="text-text-primary hover:text-accent transition-colors">Latest</a>
-                                                <button onclick="openSuggestionModal()" class="suggestion-btn px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
+                        <button onclick="openSuggestionModal()" class="suggestion-btn px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
                             💡 Suggestion
                         </button>
                         <button onclick="openSubscribeModal()" class="youtube-subscribe px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
@@ -1777,7 +1786,7 @@
     </div>
 
     <!-- Suggestion Modal -->
-    <div id="suggestionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div id="suggestionModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
         <div class="rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--card-bg);">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
@@ -1905,12 +1914,18 @@
         
         // Suggestion Modal Functions
         function openSuggestionModal() {
-            document.getElementById('suggestionModal').classList.remove('hidden');
+            console.log('Opening suggestion modal');
+            const modal = document.getElementById('suggestionModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
         
         function closeSuggestionModal() {
-            document.getElementById('suggestionModal').classList.add('hidden');
+            console.log('Closing suggestion modal');
+            const modal = document.getElementById('suggestionModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
         }
         
@@ -1923,7 +1938,31 @@
             const type = document.getElementById('suggestionType').value;
             const message = document.getElementById('suggestionMessage').value;
 
-            // Create news card HTML
+            // Create suggestion object
+            const suggestion = {
+                name: name,
+                email: email,
+                type: type,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            let suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+            suggestions.push(suggestion);
+            localStorage.setItem('suggestions', JSON.stringify(suggestions));
+            
+            // Show success message
+            showNotification('✅ Thank you! Your suggestion has been submitted successfully.', 'success');
+            
+            // Reset form and close modal
+            document.getElementById('suggestionForm').reset();
+            closeSuggestionModal();
+        });
+        
+        // The duplicate code and function have been removed to fix syntax errors
+        
+        // Create News Card Function
         function createNewsCard(news) {
             const categoryColors = {
                 'Gaming': 'bg-purple-100 text-purple-600',
@@ -1935,57 +1974,35 @@
             };
 
             const categoryClass = categoryColors[news.category] || 'bg-gray-100 text-gray-600';
-
-                let suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
-                suggestions.push(suggestion);
-                localStorage.setItem('suggestions', JSON.stringify(suggestions));
-                
-                // Show success message
-                showNotification('✅ Thank you! Your suggestion has been submitted successfully.', 'success');
-                
-                // Reset form and close modal
-                document.getElementById('suggestionForm').reset();
-                closeSuggestionModal();
-            }
             
-            // Notification Function
-            function showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
-                    type === 'success' ? 'bg-green-500 text-white' : 
-                    type === 'error' ? 'bg-red-500 text-white' : 
-                    'bg-blue-500 text-white'
-                }`;
-                notification.textContent = message;
-            
-            // Reset form and close modal
-            document.getElementById('suggestionForm').reset();
-            closeSuggestionModal();
-        });
-        
-        // Notification Function
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
-                type === 'success' ? 'bg-green-500 text-white' : 
-                type === 'error' ? 'bg-red-500 text-white' : 
-                'bg-blue-500 text-white'
-            }`;
-            notification.textContent = message;
-            notification.style.transform = 'translateX(400px)';
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            setTimeout(() => {
-                notification.style.transform = 'translateX(400px)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
+            // Create and return the news card HTML
+            return `
+                <div class="glass-card rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                    <img src="${news.image}" alt="${news.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold ${categoryClass}">
+                                ${news.category}
+                            </span>
+                            <span class="text-sm text-gray-500">${news.readTime}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">${news.title}</h3>
+                        <p class="text-gray-600 mb-4" style="color: var(--text-secondary);">${news.excerpt}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="${news.authorImage || 'https://picsum.photos/seed/author/40/40.jpg'}" alt="${news.author}" class="w-8 h-8 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">${news.author}</p>
+                                    <p class="text-xs text-gray-500">${news.date}</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 rounded-lg text-sm font-semibold transition-colors" style="background-color: var(--accent-color); color: white;">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
                 
         // Mobile Menu Toggle
