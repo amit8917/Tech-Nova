@@ -1153,38 +1153,12 @@
         /* Slightly increase button text size for readability */
         #home .premium-button { font-size: 1.02rem !important; }
         
-        /* Disable text selection to prevent copying */
+        /* Enable text selection for all content */
         * {
-            -webkit-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-            user-select: none !important;
-        }
-        
-        /* Allow selection for inputs and text areas */
-        input, textarea {
             -webkit-user-select: text !important;
             -moz-user-select: text !important;
             -ms-user-select: text !important;
             user-select: text !important;
-        }
-        
-        /* Allow selection for code blocks */
-        code, pre {
-            -webkit-user-select: text !important;
-            -moz-user-select: text !important;
-            -ms-user-select: text !important;
-            user-select: text !important;
-        }
-        
-        /* Disable right click context menu */
-        body {
-            -webkit-touch-callout: none !important;
-            -webkit-user-select: none !important;
-            -khtml-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-            user-select: none !important;
         }
 
         /* Remove vertical gap between header and hero */
@@ -1442,10 +1416,7 @@
                 
                 <!-- Additional premium buttons -->
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ff7a18, #ffb199); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        🌍 World News
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #7c3aed, #9f7aea); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                        <button onclick="document.getElementById('gamingNews').scrollIntoView({behavior: 'smooth'});" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #7c3aed, #9f7aea); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                         🎮 Gaming
                     </button>
                     <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #0891b2, #34d399); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -1460,7 +1431,7 @@
                     <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                         ⚽ Sports
                     </button>
-                    <button onclick="openIndiaNewsModal()" class="premium-button india-news-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ff9933, #ff6600); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button india-news-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ff9933, #ff6600); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                         <span class="flag-emoji">🇮🇳</span> India News
                     </button>
                 </div>
@@ -1487,11 +1458,11 @@
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🌍</span>
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🇮🇳</span>
                     </div>
-                    <h3 class="font-semibold">World News</h3>
-                    <p class="text-gray-500 text-sm mt-1">Global events</p>
+                    <h3 class="font-semibold">India News</h3>
+                    <p class="text-gray-500 text-sm mt-1">National updates</p>
                 </div>
                 
                 <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
@@ -1533,6 +1504,148 @@
                     <h3 class="font-semibold">Sports</h3>
                     <p class="text-gray-500 text-sm mt-1">Games & scores</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+</nav>
+</header>
+
+<!-- Event Banner Section -->
+<section id="eventBanner" class="py-8" style="background-color: var(--bg-primary);">
+    <div class="container mx-auto px-4">
+        <div class="glass-card rounded-xl p-6 text-center">
+            <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);"> Current Events & Featured Stories</h3>
+            <div class="event-photo-container">
+                <img src="https://as2.ftcdn.net/v2/jpg/01/66/75/81/1000_F_166758145_IRLnFtzsVAbPayPc9f8dKkPbNpu8xga5.jpg" alt="India Republic Day 2026" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                <div class="mt-4">
+                    <p class="text-lg font-semibold" style="color: var(--text-primary);"> Featured Event: India's 77th Republic Day - January 26, 2026</p>
+                    <p class="text-sm mt-2" style="color: var(--text-secondary);">Join us in celebrating India's 77th Republic Day! Honoring the day when the Constitution of India came into effect in 1950. Jai Hind! </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gaming News Section -->
+    <section id="gamingNews" class="py-16" style="background-color: var(--bg-secondary);">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4" style="color: var(--text-primary);">🎮 Gaming News</h2>
+            <p class="text-xl text-center mb-12" style="color: var(--text-secondary);">Latest gaming updates, releases, and esports news</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Weekly Gaming News -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer" onclick="window.open('weekly-gaming-news.html', '_blank')">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-6xl">🎮</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">Gaming</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">1 hour ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Weekly Gaming News</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Your weekly roundup of the biggest gaming news, releases, and updates from the gaming world.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-purple-600 hover:text-purple-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- BGMI Tournament -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <span class="text-6xl">🏆</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">Esports</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">3 hours ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">BGMI Masters Tournament: ₹2 Crore Prize Pool</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Krafton announces biggest BGMI tournament in India with top teams competing for massive prize pool and glory.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-orange-600 hover:text-orange-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- PlayStation 6 News -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                        <span class="text-6xl">🎯</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">Console</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">5 hours ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">PlayStation 6 Development Confirmed by Sony</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Sony confirms next-gen console is in development, promises revolutionary gaming experience with AI integration.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Free Fire Update -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+                        <span class="text-6xl">🔥</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">Mobile</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">6 hours ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Free Fire OB40 Update Brings New Character</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Garena releases major update with new character 'K' with unique abilities and revamped Bermuda map for better gameplay.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-yellow-600 hover:text-yellow-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Indian Gaming Market -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                        <span class="text-6xl">📈</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">Industry</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">8 hours ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Gaming Market Reaches ₹25,000 Crore</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Report shows massive growth in Indian gaming sector with mobile gaming leading the revolution across tier-2 and tier-3 cities.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-green-600 hover:text-green-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Esports Scholarships -->
+                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-6xl">🎓</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">Education</span>
+                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">12 hours ago</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Universities Offer Esports Scholarships</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Multiple top universities introduce esports programs with full scholarships for talented gamers across India.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
+                            <button class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm">Read More →</button>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -1853,6 +1966,120 @@
         </div>
     </div>
 
+    <!-- Climate Article Modal -->
+    <div id="climateArticleModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="glass-modal rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-2xl">🏛️</span>
+                        </div>
+                        <div>
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">Politics</span>
+                            <span class="text-sm ml-2" style="color: var(--text-secondary);">2 hours ago</span>
+                        </div>
+                    </div>
+                    <button onclick="closeClimateArticleModal()" style="color: var(--text-secondary);" class="hover:text-accent transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <h2 class="text-3xl font-bold mb-6" style="color: var(--text-primary);">Global Summit Addresses Climate Change Crisis</h2>
+                
+                <div class="mb-6">
+                    <img src="https://imgs.search.brave.com/GGpAwrO-h99g4Ss8P4DRogYAr4OJg1P8_psNKEhYLQ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dW5lbnZpcm9ubWVu/dC5vcmcvc3R5bGVz/L2FydGljbGVfYmls/bGJvYXJkX2ltYWdl/L3MzLzIwMjMtMTEv/NTMzNjU2OTE5NzFf/ODYzNDNhNmMwNl9r/LmpwZz9oPTJjM2U5/YTc4JmFtcDtpdG9r/PUVPNWNzb2lO" alt="Climate Summit Geneva" class="w-full h-64 object-cover rounded-lg shadow-lg">
+                    <p class="text-sm mt-2 italic" style="color: var(--text-tertiary);">World leaders gather at the Geneva Climate Summit</p>
+                </div>
+                
+                <div class="prose max-w-none" style="color: var(--text-secondary);">
+                    <p class="text-lg mb-4"><strong>Geneva, Switzerland</strong> — World leaders, climate scientists, and policy makers gathered in Geneva today for a high-level global summit focused on tackling the accelerating climate change crisis. The summit aims to establish stronger international cooperation, accelerate climate financing, and enforce stricter environmental policies to limit global perceived temperature rise.</p>
+                    
+                    <p class="mb-4">Representatives from over 120 nations participated in the discussions, emphasizing urgent action to reduce carbon emissions, transition to renewable energy, and strengthen climate resilience in vulnerable regions. The summit comes amid growing concerns over rising sea levels, extreme weather events, and food security risks affecting millions worldwide.</p>
+                    
+                    <div class="mb-6">
+                        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=300&q=80" alt="Renewable Energy" class="w-full h-48 object-cover rounded-lg shadow-lg">
+                        <p class="text-sm mt-2 italic" style="color: var(--text-tertiary);">Renewable energy solutions are a key focus area</p>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8" style="color: var(--text-primary);">Key Focus Areas</h3>
+                    
+                    <p class="mb-4">The summit agenda highlights several critical areas:</p>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4" style="background-color: var(--bg-secondary);">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <div>
+                                    <strong>Emission Reduction Targets:</strong> Nations are being urged to update and commit to more aggressive carbon-cutting goals for 2030 and beyond.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <div>
+                                    <strong>Renewable Energy Expansion:</strong> Global investment in solar, wind, and hydrogen energy solutions is a top priority.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <div>
+                                    <strong>Climate Financing:</strong> Developed nations face renewed pressure to fulfill pledged financial aid for developing countries to combat climate impacts.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                <div>
+                                    <strong>Disaster Preparedness:</strong> Strengthening early warning systems and emergency response infrastructure in climate-sensitive regions.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8" style="color: var(--text-primary);">Global Cooperation at the Core</h3>
+                    
+                    <p class="mb-4">United Nations officials stressed that climate change is a shared global challenge that transcends borders. "No nation can fight this battle alone," stated the summit chair in the opening address. The message was clear: coordinated international diplomacy remains essential to achieving sustainable environmental progress.</p>
+                    
+                    <div class="mb-6">
+                        <img src="https://picsum.photos/seed/climateimpact/1200/300.jpg" alt="Climate Change Impact" class="w-full h-48 object-cover rounded-lg shadow-lg">
+                        <p class="text-sm mt-2 italic" style="color: var(--text-tertiary);">Climate change impacts are becoming more severe worldwide</p>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8" style="color: var(--text-primary);">Rising Urgency</h3>
+                    
+                    <p class="mb-4">Recent scientific reports presented at the summit indicate that the planet is approaching critical climate thresholds faster than previously predicted. Without immediate policy enforcement and large-scale behavioral change, long-term ecological and economic consequences could be irreversible.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8" style="color: var(--text-primary);">What Happens Next</h3>
+                    
+                    <p class="mb-4">Following the summit, participating nations are expected to draft updated climate policy frameworks and submit revised commitments before the next UN Climate Conference. Monitoring mechanisms and accountability measures will also be introduced to ensure real progress rather than symbolic agreements.</p>
+                    
+                    <div class="mb-6">
+                        <img src="https://picsum.photos/seed/climatefuture/1200/300.jpg" alt="Future Generations" class="w-full h-48 object-cover rounded-lg shadow-lg">
+                        <p class="text-sm mt-2 italic" style="color: var(--text-tertiary);">Climate decisions will impact future generations worldwide</p>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8" style="color: var(--text-primary);">Why This Matters</h3>
+                    
+                    <p class="mb-4">Climate decisions made at global summits directly influence national energy policies, industrial regulations, fuel pricing, agriculture sustainability, and long-term economic planning. For citizens worldwide, these agreements shape the future environment and quality of life.</p>
+                    
+                    <div class="mt-8 pt-6 border-t" style="border-color: var(--border-color);">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</p>
+                                <p class="text-xs" style="color: var(--text-tertiary);">Category: International Politics & Diplomacy</p>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Share</button>
+                                <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Bookmark</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- India News Modal -->
     <div id="indiaNewsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
         <div class="rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--card-bg);">
@@ -2058,6 +2285,21 @@
         
         function closeIndiaNewsModal() {
             const modal = document.getElementById('indiaNewsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Climate Article Modal Functions
+        function openClimateArticleModal() {
+            const modal = document.getElementById('climateArticleModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeClimateArticleModal() {
+            const modal = document.getElementById('climateArticleModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
