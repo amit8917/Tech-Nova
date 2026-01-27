@@ -1144,7 +1144,6 @@
         #home .premium-button * {
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
-            text-fill-color: #ffffff !important;
             font-weight: 700 !important;
             opacity: 1 !important;
             text-shadow: 0 2px 6px rgba(0,0,0,0.45) !important;
@@ -1201,9 +1200,7 @@
         body header.glass-header .youtube-subscribe:active,
         body header.glass-header .youtube-subscribe:focus {
             color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            text-fill-color: #ffffff !important;
-        }
+            -webkit-                    }
         
         /* Strong override: keep header Suggestion button text white on all states */
         body header.glass-header .suggestion-btn,
@@ -1211,9 +1208,7 @@
         body header.glass-header .suggestion-btn:active,
         body header.glass-header .suggestion-btn:focus {
             color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            text-fill-color: #ffffff !important;
-        }
+            -webkit-                    }
         
         /* Fix modal subscribe button hover - keep text white */
         #subscribeModal .youtube-subscribe,
@@ -1221,9 +1216,7 @@
         #subscribeModal .youtube-subscribe:active,
         #subscribeModal .youtube-subscribe:focus {
             color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
-            text-fill-color: #ffffff !important;
-        }
+            -webkit-                    }
         
         /* Fix modal borders and dividers to yellow */
         #subscribeModal {
@@ -1408,34 +1401,8 @@
                 <p class="text-xl mb-8" style="color: #fef3c7; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
                     🌍 Breaking news, in-depth coverage, and current events from around the world
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl text-lg" style="background: linear-gradient(135deg, #059669, #047857); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        📖 Start Reading
-                    </button>
-                                    </div>
-                
-                <!-- Additional premium buttons -->
-                <div class="flex flex-wrap justify-center gap-4">
-                                        <button onclick="document.getElementById('gamingNews').scrollIntoView({behavior: 'smooth'});" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #7c3aed, #9f7aea); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        🎮 Gaming
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #0891b2, #34d399); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        🏛️ Politics
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #f97316, #ef4444); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        🏥 Health
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ec4899, #f472b6); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        🎬 Entertainment
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        ⚽ Sports
-                    </button>
-                    <button onclick="window.open('coming-soon.html', '_blank');" class="premium-button india-news-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 shadow-lg hover:shadow-xl" style="background: linear-gradient(135deg, #ff9933, #ff6600); color: white; border: none; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        <span class="flag-emoji">🇮🇳</span> India News
-                    </button>
-                </div>
-            </div>
+                                
+                            </div>
         </div>
     </section>
 
@@ -1451,63 +1418,7 @@
         </div>
     </div>
 
-    <!-- Categories Section -->
-    <section id="categories" class="py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">News Categories</h2>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🇮🇳</span>
-                    </div>
-                    <h3 class="font-semibold">India News</h3>
-                    <p class="text-gray-500 text-sm mt-1">National updates</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🎮</span>
-                    </div>
-                    <h3 class="font-semibold">Gaming</h3>
-                    <p class="text-gray-500 text-sm mt-1">Games & esports</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🏛️</span>
-                    </div>
-                    <h3 class="font-semibold">Politics</h3>
-                    <p class="text-gray-500 text-sm mt-1">Government news</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🏥</span>
-                    </div>
-                    <h3 class="font-semibold">Health</h3>
-                    <p class="text-gray-500 text-sm mt-1">Medical news</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">🎬</span>
-                    </div>
-                    <h3 class="font-semibold">Entertainment</h3>
-                    <p class="text-gray-500 text-sm mt-1">Movies & TV</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-lg text-center transition-transform cursor-pointer hover:scale-105">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">⚽</span>
-                    </div>
-                    <h3 class="font-semibold">Sports</h3>
-                    <p class="text-gray-500 text-sm mt-1">Games & scores</p>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 </nav>
 </header>
 
@@ -1541,7 +1452,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">Gaming</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">1 hour ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">1 hour ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Weekly Gaming News</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Your weekly roundup of the biggest gaming news, releases, and updates from the gaming world.</p>
@@ -1560,7 +1471,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">Esports</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">3 hours ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">3 hours ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">BGMI Masters Tournament: ₹2 Crore Prize Pool</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Krafton announces biggest BGMI tournament in India with top teams competing for massive prize pool and glory.</p>
@@ -1579,7 +1490,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">Console</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">5 hours ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">5 hours ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">PlayStation 6 Development Confirmed by Sony</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Sony confirms next-gen console is in development, promises revolutionary gaming experience with AI integration.</p>
@@ -1598,7 +1509,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">Mobile</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">6 hours ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">6 hours ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Free Fire OB40 Update Brings New Character</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Garena releases major update with new character 'K' with unique abilities and revamped Bermuda map for better gameplay.</p>
@@ -1617,7 +1528,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">Industry</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">8 hours ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">8 hours ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Gaming Market Reaches ₹25,000 Crore</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Report shows massive growth in Indian gaming sector with mobile gaming leading the revolution across tier-2 and tier-3 cities.</p>
@@ -1636,7 +1547,7 @@
                     <div class="p-6">
                         <div class="flex items-center mb-3">
                             <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">Education</span>
-                            <span class="text-sm" style="color: var(--text-secondary); ml-auto">12 hours ago</span>
+                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">12 hours ago</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Universities Offer Esports Scholarships</h3>
                         <p class="mb-4" style="color: var(--text-secondary);">Multiple top universities introduce esports programs with full scholarships for talented gamers across India.</p>
@@ -1826,7 +1737,9 @@
                         <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
                         <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
                         <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="admin.html" class="hover:text-white transition-colors">Admin</a></li>
+                        <li><button onclick="openAdminPanel()" class="admin-btn px-3 py-1 rounded-lg transition-all duration-200 font-semibold text-sm" style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; border: none;" onmouseover="this.style.background='linear-gradient(135deg, #b91c1c, #991b1b)'" onmouseout="this.style.background='linear-gradient(135deg, #dc2626, #ef4444)'">
+                            ⚙️ Admin Panel
+                        </button></li>
                     </ul>
                 </div>
                 
@@ -1961,6 +1874,186 @@
                     <button onclick="closeSubscribeModal()" class="px-4 py-2 rounded-lg text-white transition-colors" style="background: linear-gradient(135deg, #059669, #047857); border: none;">
                         Got it!
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4" style="background-color: rgba(0, 0, 0, 0.95);">
+        <div class="rounded-xl max-w-6xl w-full max-h-[95vh] overflow-y-auto" style="background-color: var(--card-bg);">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold" style="color: #dc2626; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">⚙️ Admin Panel</h3>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="logoutAdmin()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                        <button onclick="closeAdminPanel()" style="color: #f59e0b;" class="hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Admin Panel Content -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Post Blog Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer" onclick="window.open('blog-editor.html', '_blank')">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-pen-to-square text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">📝 Post Blog</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Create and publish new blog articles with images and structured content.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-semibold">Active</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Manage Suggestions Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer" onclick="openSuggestionsManager()">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">💡 Manage Suggestions</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">View and manage user suggestions and feedback.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-semibold">Active</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Manage Blogs Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-list text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">📋 Manage Blogs</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Edit, delete, and manage all published blog posts and drafts.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-semibold">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">📊 Analytics</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">View blog performance, visitor stats, and engagement metrics.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-semibold">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cog text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">⚙️ Settings</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Configure site settings, SEO, and administrative preferences.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-semibold">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">👥 Users</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Manage user accounts, permissions, and subscription lists.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-semibold">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Backup Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer">
+                        <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">💾 Backup</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Create backups and restore site data and content.</p>
+                        <div class="mt-4">
+                            <span class="inline-block px-3 py-1 bg-teal-100 text-teal-600 rounded-full text-xs font-semibold">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="mt-8 p-6 rounded-lg" style="background-color: var(--bg-secondary);">
+                    <h4 class="text-lg font-bold mb-4" style="color: var(--text-primary);">📈 Quick Stats</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold" style="color: var(--accent-color);">12</div>
+                            <div class="text-sm" style="color: var(--text-secondary);">Total Blogs</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold" style="color: var(--accent-color);">3</div>
+                            <div class="text-sm" style="color: var(--text-secondary);">Drafts</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold" style="color: var(--accent-color);">1.2K</div>
+                            <div class="text-sm" style="color: var(--text-secondary);">Views Today</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold" style="color: var(--accent-color);">89</div>
+                            <div class="text-sm" style="color: var(--text-secondary);">Subscribers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggestions Manager Modal -->
+    <div id="suggestionsManagerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4" style="background-color: rgba(0, 0, 0, 0.95);">
+        <div class="rounded-xl max-w-6xl w-full max-h-[95vh] overflow-y-auto" style="background-color: var(--card-bg);">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold" style="color: #dc2626; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">💡 Manage Suggestions</h3>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="refreshSuggestions()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                            <i class="fas fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                        <button onclick="closeSuggestionsManager()" style="color: #f59e0b;" class="hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Suggestions Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="totalSuggestions" style="color: var(--accent-color);">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Total Suggestions</div>
+                    </div>
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="contentSuggestions" style="color: var(--accent-color);">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Content Ideas</div>
+                    </div>
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="featureSuggestions" style="color: var(--accent-color);">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Feature Requests</div>
+                    </div>
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="bugSuggestions" style="color: var(--accent-color);">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Bug Reports</div>
+                    </div>
+                </div>
+                
+                <!-- Suggestions List -->
+                <div id="suggestionsList" class="space-y-4">
+                    <div class="text-center py-8" style="color: var(--text-secondary);">
+                        <i class="fas fa-inbox text-4xl mb-4 opacity-50"></i>
+                        <p>No suggestions yet. When users submit suggestions, they will appear here.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2290,6 +2383,155 @@
             document.body.style.overflow = 'auto';
         }
         
+        // Admin Panel Functions
+        function openAdminPanel() {
+            // Check if user is logged in
+            const adminSession = localStorage.getItem('adminSession') || sessionStorage.getItem('adminSession');
+            
+            if (adminSession === 'true') {
+                // User is logged in, open admin panel
+                document.getElementById('adminPanelModal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                // User is not logged in, redirect to login page
+                window.location.href = 'admin-login.html';
+            }
+        }
+        
+        function closeAdminPanel() {
+            document.getElementById('adminPanelModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Logout function
+        function logoutAdmin() {
+            localStorage.removeItem('adminSession');
+            localStorage.removeItem('adminEmail');
+            sessionStorage.removeItem('adminSession');
+            showNotification('Logged out successfully!', 'success');
+            closeAdminPanel();
+        }
+        
+        // Suggestions Manager Functions
+        function openSuggestionsManager() {
+            document.getElementById('suggestionsManagerModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            loadSuggestions();
+        }
+        
+        function closeSuggestionsManager() {
+            document.getElementById('suggestionsManagerModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function loadSuggestions() {
+            const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+            const suggestionsList = document.getElementById('suggestionsList');
+            
+            // Update stats
+            const stats = {
+                total: suggestions.length,
+                content: suggestions.filter(s => s.type === 'content').length,
+                feature: suggestions.filter(s => s.type === 'feature').length,
+                bug: suggestions.filter(s => s.type === 'bug').length
+            };
+            
+            document.getElementById('totalSuggestions').textContent = stats.total;
+            document.getElementById('contentSuggestions').textContent = stats.content;
+            document.getElementById('featureSuggestions').textContent = stats.feature;
+            document.getElementById('bugSuggestions').textContent = stats.bug;
+            
+            // Display suggestions
+            if (suggestions.length === 0) {
+                suggestionsList.innerHTML = `
+                    <div class="text-center py-8" style="color: var(--text-secondary);">
+                        <i class="fas fa-inbox text-4xl mb-4 opacity-50"></i>
+                        <p>No suggestions yet. When users submit suggestions, they will appear here.</p>
+                    </div>
+                `;
+            } else {
+                suggestionsList.innerHTML = suggestions.map((suggestion, index) => {
+                    const typeColors = {
+                        'content': 'bg-blue-100 text-blue-600',
+                        'feature': 'bg-green-100 text-green-600',
+                        'improvement': 'bg-yellow-100 text-yellow-600',
+                        'bug': 'bg-red-100 text-red-600',
+                        'other': 'bg-gray-100 text-gray-600'
+                    };
+                    
+                    const typeLabels = {
+                        'content': 'Content Idea',
+                        'feature': 'Feature Request',
+                        'improvement': 'Improvement',
+                        'bug': 'Bug Report',
+                        'other': 'Other'
+                    };
+                    
+                    const date = new Date(suggestion.timestamp).toLocaleString();
+                    
+                    return `
+                        <div class="glass-card p-6 rounded-lg">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold" style="color: var(--text-primary);">${suggestion.name}</h4>
+                                        <p class="text-sm" style="color: var(--text-secondary);">${suggestion.email || 'No email provided'}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${typeColors[suggestion.type] || typeColors.other}">
+                                        ${typeLabels[suggestion.type] || suggestion.type}
+                                    </span>
+                                    <p class="text-xs mt-2" style="color: var(--text-tertiary);">${date}</p>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h5 class="font-semibold mb-2" style="color: var(--text-primary);">Suggestion:</h5>
+                                <p style="color: var(--text-secondary); line-height: 1.6;">${suggestion.message}</p>
+                            </div>
+                            <div class="flex justify-end space-x-3">
+                                <button onclick="deleteSuggestion(${index})" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                                    <i class="fas fa-trash mr-2"></i>Delete
+                                </button>
+                                <button onclick="markAsResolved(${index})" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                                    <i class="fas fa-check mr-2"></i>Mark as Resolved
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        function refreshSuggestions() {
+            loadSuggestions();
+            showNotification('Suggestions refreshed!', 'success');
+        }
+        
+        function deleteSuggestion(index) {
+            if (confirm('Are you sure you want to delete this suggestion?')) {
+                let suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+                suggestions.splice(index, 1);
+                localStorage.setItem('suggestions', JSON.stringify(suggestions));
+                loadSuggestions();
+                showNotification('Suggestion deleted successfully!', 'success');
+            }
+        }
+        
+        function markAsResolved(index) {
+            if (confirm('Mark this suggestion as resolved?')) {
+                let suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+                suggestions[index].resolved = true;
+                suggestions[index].resolvedAt = new Date().toISOString();
+                localStorage.setItem('suggestions', JSON.stringify(suggestions));
+                loadSuggestions();
+                showNotification('Suggestion marked as resolved!', 'success');
+            }
+        }
+        
         // Climate Article Modal Functions
         function openClimateArticleModal() {
             const modal = document.getElementById('climateArticleModal');
@@ -2334,7 +2576,7 @@
             localStorage.setItem('indiaNews', JSON.stringify(indiaNewsList));
             
             // Show success message
-            showNotification('🇮🇳 India news posted successfully! Your article has been saved.', 'success');
+            showNotification(' India news posted successfully! Your article has been saved.', 'success');
             
             // Reset form and close modal
             document.getElementById('indiaNewsForm').reset();
@@ -2382,6 +2624,7 @@
             localStorage.setItem('suggestions', JSON.stringify(suggestions));
             
             // Show success message
+            showNotification(' Thank you! Your suggestion has been submitted successfully.', 'success');
             showNotification('✅ Thank you! Your suggestion has been submitted successfully.', 'success');
             
             // Reset form and close modal
@@ -2570,6 +2813,19 @@
                 setTimeout(() => notification.remove(), 500);
             }, 5000);
         }
+        
+        // Check for admin login redirect
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('openAdmin') === 'true') {
+                // Clear the URL parameter
+                window.history.replaceState({}, document.title, window.location.pathname);
+                // Open admin panel after a short delay
+                setTimeout(() => {
+                    openAdminPanel();
+                }, 500);
+            }
+        });
         
         // Add loading animation for images
         const images = document.querySelectorAll('img');
