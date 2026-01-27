@@ -1752,7 +1752,7 @@
                 <div>
                     <h4 class="font-semibold mb-4">Developer</h4>
                     <div class="flex items-center space-x-3 mb-4">
-                        <img src="C:/Users/Kumar/Desktop/New folder/123.jpg" alt="Amit Kumar Sahu" class="w-12 h-12 rounded-full border-2 border-indigo-400 object-cover">
+                        <img src="assets/123.jpg" alt="Amit Kumar Sahu" class="w-12 h-12 rounded-full border-2 border-indigo-400 object-cover">
                         <div>
                             <h5 class="font-semibold text-white">Amit Kumar Sahu</h5>
                             <p class="text-sm text-gray-400">Site Developer</p>
@@ -2076,6 +2076,9 @@
                         </button>
                         <button onclick="refreshBlogs()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm font-semibold">
                             <i class="fas fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                        <button onclick="clearAllBlogs()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                            <i class="fas fa-trash-alt mr-2"></i>Clear All
                         </button>
                         <button onclick="closeBlogsManager()" style="color: #f59e0b;" class="hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3288,6 +3291,16 @@
                 });
             }
         });
+        
+        // Clear all blogs (temporary function for cleanup)
+        function clearAllBlogs() {
+            if (confirm('Are you sure you want to delete ALL blogs? This action cannot be undone.')) {
+                localStorage.removeItem('publishedBlogs');
+                localStorage.removeItem('blogDraft');
+                loadBlogPosts();
+                showNotification('All blogs have been deleted!', 'success');
+            }
+        }
         
         // Add loading animation for images
         const images = document.querySelectorAll('img');

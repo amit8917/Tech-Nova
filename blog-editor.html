@@ -639,6 +639,26 @@
             previewContent.innerHTML = previewHTML || '<p class="text-gray-500 italic">Start writing to see the preview...</p>';
         }
 
+        // Set development image
+        function setDevImage(type) {
+            const devImagePath = 'assets/123.jpg';
+            
+            if (type === 'banner') {
+                const bannerPreview = document.getElementById('bannerPreview');
+                bannerPreview.src = devImagePath;
+                bannerPreview.style.display = 'block';
+                showNotification('Development image set for banner!', 'success');
+            } else if (type.startsWith('section')) {
+                const sectionNum = type.replace('section', '');
+                const preview = document.getElementById(`${type}Preview`);
+                preview.src = devImagePath;
+                preview.style.display = 'block';
+                showNotification(`Development image set for section ${sectionNum}!`, 'success');
+            }
+            
+            updatePreview();
+        }
+
         // Save draft
         function saveDraft() {
             const blogData = collectBlogData();
