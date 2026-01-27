@@ -1200,7 +1200,8 @@
         body header.glass-header .youtube-subscribe:active,
         body header.glass-header .youtube-subscribe:focus {
             color: #ffffff !important;
-            -webkit-                    }
+            -webkit-text-fill-color: #ffffff !important;
+        }
         
         /* Strong override: keep header Suggestion button text white on all states */
         body header.glass-header .suggestion-btn,
@@ -1208,7 +1209,8 @@
         body header.glass-header .suggestion-btn:active,
         body header.glass-header .suggestion-btn:focus {
             color: #ffffff !important;
-            -webkit-                    }
+            -webkit-text-fill-color: #ffffff !important;
+        }
         
         /* Fix modal subscribe button hover - keep text white */
         #subscribeModal .youtube-subscribe,
@@ -1216,7 +1218,8 @@
         #subscribeModal .youtube-subscribe:active,
         #subscribeModal .youtube-subscribe:focus {
             color: #ffffff !important;
-            -webkit-                    }
+            -webkit-text-fill-color: #ffffff !important;
+        }
         
         /* Fix modal borders and dividers to yellow */
         #subscribeModal {
@@ -1443,8 +1446,10 @@
             <h2 class="text-4xl font-bold text-center mb-4" style="color: var(--text-primary);">🎮 Gaming News</h2>
             <p class="text-xl text-center mb-12" style="color: var(--text-secondary);">Latest gaming updates, releases, and esports news</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Weekly Gaming News -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+                <!-- Dynamic Blog Posts will be inserted here -->
+                
+                <!-- Weekly Gaming News (Static fallback) -->
                 <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer" onclick="window.open('weekly-gaming-news.html', '_blank')">
                     <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
                         <span class="text-6xl">🎮</span>
@@ -2814,6 +2819,104 @@
             }, 5000);
         }
         
+        // Load dynamic blog posts
+        function loadBlogPosts() {
+            const publishedBlogs = JSON.parse(localStorage.getItem('publishedBlogs') || '[]');
+            const blogGrid = document.getElementById('blogGrid');
+            
+            // Sort by publish date (newest first)
+            publishedBlogs.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+            
+            // Display up to 6 most recent blogs
+            const recentBlogs = publishedBlogs.slice(0, 6);
+            
+            // Generate blog post HTML
+            const blogPostsHTML = recentBlogs.map((blog, index) => {
+                const publishDate = new Date(blog.publishDate).toLocaleString();
+                const categoryColors = {
+                    'gaming': 'bg-purple-100 text-purple-600',
+                    'india': 'bg-orange-100 text-orange-600',
+                    'politics': 'bg-blue-100 text-blue-600',
+                    'health': 'bg-green-100 text-green-600',
+                    'entertainment': 'bg-pink-100 text-pink-600',
+                    'sports': 'bg-yellow-100 text-yellow-600'
+                };
+                
+                const categoryEmojis = {
+                    'gaming': '🎮',
+                    'india': '🇮🇳',
+                    'politics': '🏛️',
+                    'health': '🏥',
+                    'entertainment': '🎬',
+                    'sports': '⚽'
+                };
+                
+                const categoryColor = categoryColors[blog.category] || 'bg-gray-100 text-gray-600';
+                const categoryEmoji = categoryEmojis[blog.category] || '📄';
+                
+                // Create cover image HTML
+                let coverImageHtml = '';
+                if (blog.bannerImage && blog.bannerImage !== '') {
+                    coverImageHtml = `
+                        <div class="h-48 overflow-hidden">
+                            <img src="${blog.bannerImage}" alt="${blog.mainHeading || blog.heading}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                        </div>
+                    `;
+                } else {
+                    // Fallback to gradient with emoji
+                    const gradientColors = {
+                        'gaming': 'from-purple-500 to-purple-600',
+                        'india': 'from-orange-500 to-red-600',
+                        'politics': 'from-blue-500 to-blue-600',
+                        'health': 'from-green-500 to-teal-600',
+                        'entertainment': 'from-pink-500 to-purple-600',
+                        'sports': 'from-yellow-500 to-orange-600'
+                    };
+                    const gradient = gradientColors[blog.category] || 'from-gray-500 to-gray-600';
+                    coverImageHtml = `
+                        <div class="h-48 bg-gradient-to-br ${gradient} flex items-center justify-center">
+                            <span class="text-6xl">${categoryEmoji}</span>
+                        </div>
+                    `;
+                }
+                
+                return `
+                    <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer" onclick="openBlogPost(${index})">
+                        ${coverImageHtml}
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="${categoryColor} px-3 py-1 rounded-full text-sm font-semibold">${blog.category.charAt(0).toUpperCase() + blog.category.slice(1)}</span>
+                                <span class="text-sm ml-auto" style="color: var(--text-secondary);">${publishDate}</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">${blog.mainHeading || blog.heading}</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">${(blog.mainParagraph || blog.paragraph) ? (blog.mainParagraph || blog.paragraph).substring(0, 100) + '...' : 'No description available.'}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm" style="color: var(--text-secondary);">By ${blog.author || 'Respawn Daily'}</span>
+                                <button class="text-purple-600 hover:text-purple-700 font-semibold text-sm">Read More →</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            
+            // Insert blog posts at the beginning of the grid
+            if (recentBlogs.length > 0) {
+                blogGrid.insertAdjacentHTML('afterbegin', blogPostsHTML);
+            }
+        }
+        
+        function openBlogPost(index) {
+            const publishedBlogs = JSON.parse(localStorage.getItem('publishedBlogs') || '[]');
+            const blog = publishedBlogs[index];
+            
+            if (blog) {
+                // Store blog data for the blog viewer
+                localStorage.setItem('currentBlog', JSON.stringify(blog));
+                // Open blog viewer (we'll create this page)
+                window.open('blog-viewer.html', '_blank');
+            }
+        }
+        
         // Check for admin login redirect
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -2825,6 +2928,9 @@
                     openAdminPanel();
                 }, 500);
             }
+            
+            // Load blog posts
+            loadBlogPosts();
         });
         
         // Add loading animation for images
