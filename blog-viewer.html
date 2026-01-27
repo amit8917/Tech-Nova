@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-tertiary: #94a3b8;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
             --accent-color: #f59e0b;
-            --card-bg: rgba(30, 41, 59, 0.8);
-            --border-color: rgba(148, 163, 184, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(148, 163, 184, 0.2);
         }
 
         * {
@@ -113,12 +113,12 @@
             letter-spacing: 0.05em;
         }
 
-        .category-gaming { background: rgba(147, 51, 234, 0.2); color: #a855f7; }
-        .category-india { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
-        .category-politics { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-        .category-health { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
-        .category-entertainment { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
-        .category-sports { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+        .category-gaming { background: #f3e8ff; color: #7c3aed; border: 1px solid #e9d5ff; }
+        .category-india { background: #fed7aa; color: #ea580c; border: 1px solid #ffedd5; }
+        .category-politics { background: #dbeafe; color: #2563eb; border: 1px solid #eff6ff; }
+        .category-health { background: #dcfce7; color: #16a34a; border: 1px solid #f0fdf4; }
+        .category-entertainment { background: #fce7f3; color: #db2777; border: 1px solid #fdf2f8; }
+        .category-sports { background: #fef3c7; color: #d97706; border: 1px solid #fffbeb; }
 
         .loading-spinner {
             border: 3px solid rgba(245, 158, 11, 0.3);
@@ -146,20 +146,20 @@
 </head>
 <body>
     <!-- Navigation Header -->
-    <header class="glass-card sticky top-0 z-50 border-b border-gray-700">
+    <header class="glass-card sticky top-0 z-50 border-b border-gray-200">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-4">
-                    <button onclick="window.close()" class="text-gray-400 hover:text-white transition-colors">
+                    <button onclick="window.close()" class="text-gray-600 hover:text-gray-900 transition-colors">
                         <i class="fas fa-arrow-left text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-white">Respawn Daily</h1>
+                    <h1 class="text-xl font-bold text-gray-900">Respawn Daily</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button onclick="window.print()" class="text-gray-400 hover:text-white transition-colors">
+                    <button onclick="window.print()" class="text-gray-600 hover:text-gray-900 transition-colors">
                         <i class="fas fa-print text-xl"></i>
                     </button>
-                    <button onclick="shareBlog()" class="text-gray-400 hover:text-white transition-colors">
+                    <button onclick="shareBlog()" class="text-gray-600 hover:text-gray-900 transition-colors">
                         <i class="fas fa-share-alt text-xl"></i>
                     </button>
                 </div>
@@ -171,7 +171,7 @@
     <div id="loadingState" class="flex items-center justify-center min-h-screen">
         <div class="text-center">
             <div class="loading-spinner mx-auto mb-4"></div>
-            <p class="text-gray-400">Loading blog post...</p>
+            <p class="text-gray-600">Loading blog post...</p>
         </div>
     </div>
 
@@ -205,23 +205,23 @@
             </div>
 
             <!-- Tags -->
-            <div id="blogTags" class="mt-8 pt-8 border-t border-gray-700 hidden">
-                <h3 class="text-lg font-semibold mb-4 text-gray-300">Tags</h3>
+            <div id="blogTags" class="mt-8 pt-8 border-t border-gray-200 hidden">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Tags</h3>
                 <div id="tagsContainer" class="flex flex-wrap gap-2">
                     <!-- Tags will be loaded here -->
                 </div>
             </div>
 
             <!-- Conclusion -->
-            <div id="blogConclusion" class="mt-8 p-6 rounded-xl bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 hidden">
-                <h3 class="text-lg font-semibold mb-3 text-amber-400">Conclusion</h3>
-                <p id="conclusionText" class="text-gray-300"></p>
+            <div id="blogConclusion" class="mt-8 p-6 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 hidden">
+                <h3 class="text-lg font-semibold mb-3 text-amber-800">Conclusion</h3>
+                <p id="conclusionText" class="text-gray-700"></p>
             </div>
         </article>
 
         <!-- Related Posts -->
         <div class="mt-8 glass-card p-8">
-            <h2 class="text-2xl font-bold mb-6 text-white">More Articles</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">More Articles</h2>
             <div id="relatedPosts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Related posts will be loaded here -->
             </div>
@@ -229,15 +229,15 @@
     </main>
 
     <!-- Footer -->
-    <footer class="glass-card mt-16 border-t border-gray-700">
+    <footer class="glass-card mt-16 border-t border-gray-200">
         <div class="container mx-auto px-4 py-8">
             <div class="text-center">
-                <p class="text-gray-400">&copy; 2024 Respawn Daily. All rights reserved.</p>
+                <p class="text-gray-600">&copy; 2024 Respawn Daily. All rights reserved.</p>
                 <div class="mt-4 flex justify-center space-x-6">
-                    <a href="index.html" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors">
                         <i class="fas fa-home"></i> Home
                     </a>
-                    <a href="#" onclick="window.close()" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" onclick="window.close()" class="text-gray-600 hover:text-gray-900 transition-colors">
                         <i class="fas fa-times"></i> Close
                     </a>
                 </div>
@@ -354,7 +354,7 @@
                 .slice(0, 3);
 
             if (relatedPosts.length === 0) {
-                relatedPostsContainer.innerHTML = '<p class="text-gray-400 col-span-full">No related posts found.</p>';
+                relatedPostsContainer.innerHTML = '<p class="text-gray-600 col-span-full">No related posts found.</p>';
                 return;
             }
 
@@ -368,8 +368,8 @@
                 return `
                     <div class="glass-card p-4 hover:scale-105 transition-transform cursor-pointer" onclick="openRelatedPost('${post.mainHeading || post.heading}')">
                         ${coverImage}
-                        <h4 class="font-semibold text-white mb-2 line-clamp-2">${post.mainHeading || post.heading}</h4>
-                        <p class="text-gray-400 text-sm line-clamp-2">${(post.mainParagraph || post.paragraph) ? (post.mainParagraph || post.paragraph).substring(0, 100) + '...' : 'No description'}</p>
+                        <h4 class="font-semibold text-gray-900 mb-2 line-clamp-2">${post.mainHeading || post.heading}</h4>
+                        <p class="text-gray-600 text-sm line-clamp-2">${(post.mainParagraph || post.paragraph) ? (post.mainParagraph || post.paragraph).substring(0, 100) + '...' : 'No description'}</p>
                     </div>
                 `;
             }).join('');
@@ -403,7 +403,7 @@
             document.getElementById('loadingState').innerHTML = `
                 <div class="text-center">
                     <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
-                    <p class="text-red-400">${message}</p>
+                    <p class="text-red-600">${message}</p>
                     <button onclick="window.close()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
                         Close
                     </button>
