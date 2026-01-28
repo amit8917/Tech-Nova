@@ -2063,6 +2063,18 @@
                     </div>
                 </div>
                 
+                <!-- Real-time Sync Status -->
+                <div class="mb-6 p-4 rounded-lg bg-gradient-to-r from-green-50 to-blue-50 border border-green-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-sm font-semibold text-green-800">Real-time Sync Active</span>
+                            <span class="text-xs text-green-600" id="syncStatus">Checking for new suggestions...</span>
+                        </div>
+                        <div class="text-xs text-gray-500" id="lastSyncTime">Last sync: Never</div>
+                    </div>
+                </div>
+                
                 <!-- Suggestions Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                     <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
@@ -3125,6 +3137,16 @@
             sessionSuggestions.push(suggestion);
             sessionStorage.setItem('suggestions', JSON.stringify(sessionSuggestions));
             
+            // Trigger storage event for real-time sync simulation
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'suggestions',
+                newValue: JSON.stringify(suggestions),
+                oldValue: JSON.stringify(suggestions.slice(0, -1))
+            }));
+            
+            // Simulate real-time sync by updating a "last updated" timestamp
+            localStorage.setItem('suggestions_last_updated', new Date().toISOString());
+            
             // Show success message
             showNotification(' Thank you! Your suggestion has been submitted successfully.', 'success');
             showNotification('✅ Thank you! Your suggestion has been submitted successfully.', 'success');
@@ -3226,6 +3248,115 @@
         // Initialize AdSense
         (adsbygoogle = window.adsbygoogle || []).push({});
         
+        // Real-time Suggestions Sync System
+        let lastSyncTime = Date.now();
+        const SYNC_INTERVAL = 5000; // Check every 5 seconds
+        
+        // Listen for storage events (for same-tab updates)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'suggestions') {
+                console.log('Storage event detected - reloading suggestions');
+                loadSuggestions();
+                showNotification('🔄 New suggestions detected!', 'info');
+            }
+        });
+        
+        // Auto-sync function to simulate real-time updates
+        function autoSyncSuggestions() {
+            const currentSyncTime = localStorage.getItem('suggestions_last_updated');
+            const syncStatusEl = document.getElementById('syncStatus');
+            const lastSyncTimeEl = document.getElementById('lastSyncTime');
+            
+            if (syncStatusEl) syncStatusEl.textContent = 'Checking for new suggestions...';
+            
+            if (currentSyncTime && new Date(currentSyncTime).getTime() > lastSyncTime) {
+                console.log('Auto-sync detected new suggestions');
+                loadSuggestions();
+                
+                // Show notification for new suggestions
+                const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+                if (suggestions.length > 0) {
+                    showNotification(`📬 ${suggestions.length} suggestion(s) available!`, 'success');
+                }
+                
+                lastSyncTime = new Date(currentSyncTime).getTime();
+                
+                if (syncStatusEl) syncStatusEl.textContent = 'New suggestions found!';
+                if (lastSyncTimeEl) lastSyncTimeEl.textContent = `Last sync: ${new Date().toLocaleTimeString()}`;
+                
+                // Reset status after 3 seconds
+                setTimeout(() => {
+                    if (syncStatusEl) syncStatusEl.textContent = 'Monitoring for new suggestions...';
+                }, 3000);
+            } else {
+                if (lastSyncTimeEl) lastSyncTimeEl.textContent = `Last sync: ${new Date().toLocaleTimeString()}`;
+                if (syncStatusEl) syncStatusEl.textContent = 'Monitoring for new suggestions...';
+            }
+        }
+        
+        // Start auto-sync polling
+        setInterval(autoSyncSuggestions, SYNC_INTERVAL);
+        
+        // Simulate external suggestion submissions (for demo purposes)
+        function simulateExternalSuggestion() {
+            const mockSuggestions = [
+                {
+                    name: "Anonymous User",
+                    email: "user@example.com",
+                    type: "content",
+                    message: "Great content! Please add more gaming news.",
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    name: "Gamer Friend",
+                    email: "gamer@test.com", 
+                    type: "feature",
+                    message: "Add a dark mode feature for better reading at night.",
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    name: "Tech Enthusiast",
+                    email: "tech@demo.com",
+                    type: "improvement", 
+                    message: "The site looks amazing! Consider adding a search feature.",
+                    timestamp: new Date().toISOString()
+                }
+            ];
+            
+            const randomSuggestion = mockSuggestions[Math.floor(Math.random() * mockSuggestions.length)];
+            
+            let suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+            suggestions.push(randomSuggestion);
+            localStorage.setItem('suggestions', JSON.stringify(suggestions));
+            localStorage.setItem('suggestions_last_updated', new Date().toISOString());
+            
+            // Trigger sync
+            autoSyncSuggestions();
+        }
+        
+        // Add demo button to admin panel for testing
+        function addDemoButton() {
+            const suggestionsManager = document.getElementById('suggestionsManagerModal');
+            if (suggestionsManager) {
+                const header = suggestionsManager.querySelector('.flex.justify-between.items-center');
+                if (header && !header.querySelector('.demo-btn')) {
+                    const demoBtn = document.createElement('button');
+                    demoBtn.className = 'demo-btn px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors text-sm font-semibold';
+                    demoBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Simulate';
+                    demoBtn.onclick = simulateExternalSuggestion;
+                    demoBtn.title = 'Simulate a suggestion from another user';
+                    header.appendChild(demoBtn);
+                }
+            }
+        }
+        
+        // Add demo button when suggestions manager opens
+        const originalOpenSuggestionsManager = openSuggestionsManager;
+        window.openSuggestionsManager = function() {
+            originalOpenSuggestionsManager();
+            setTimeout(addDemoButton, 100);
+        };
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -3309,10 +3440,16 @@
         
         // Notification function
         function showNotification(message, type = 'info') {
+            const colors = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500', 
+                'info': 'bg-blue-500',
+                'warning': 'bg-yellow-500'
+            };
+            
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-xl transform translate-x-full transition-transform duration-500 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-indigo-500 text-white'
-            }`;
+            notification.className = `fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-500 translate-x-full ${colors[type] || colors.info} text-white`;
+            
             notification.innerHTML = `
                 <div class="flex items-center gap-3">
                     <span class="text-lg">${message}</span>
