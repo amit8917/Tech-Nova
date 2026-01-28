@@ -935,8 +935,33 @@
             background-color: var(--card-bg);
         }
         
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
         .mobile-menu.active {
             transform: translateX(0);
+        }
+        
+        /* Mobile menu backdrop */
+        .mobile-menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .mobile-menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
         }
         
         .glass-card {
@@ -1299,6 +1324,49 @@
         .india-news-btn:hover .flag-emoji {
             animation: flagWave 0.5s ease-in-out infinite;
         }
+        
+        /* Ad Container Styling */
+        .ad-container {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ad-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ad-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            transition: left 0.8s ease-in-out;
+        }
+        
+        .ad-container:hover::before {
+            left: 100%;
+        }
+        
+        /* Responsive Ad Sizes */
+        @media (max-width: 768px) {
+            .ad-container {
+                margin: 0.5rem 0;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .ad-container {
+                margin: 1rem 0;
+            }
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -1355,22 +1423,32 @@
                 </div>
             </div>
             
+            <!-- Mobile Menu Backdrop -->
+            <div id="mobileMenuBackdrop" class="mobile-menu-backdrop md:hidden"></div>
+            
             <!-- Mobile Navigation -->
-            <div id="mobileMenu" class="mobile-menu fixed left-0 top-0 w-64 h-full glass-modal md:hidden z-50">
-                <div class="p-4">
-                    <button id="closeMobileMenu" class="mb-6 p-2 glass-button rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                    <div class="flex flex-col space-y-4">
-                        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-text-primary hover:text-accent transition-colors">Home</a>
-                        <a href="#latest" class="text-text-primary hover:text-accent transition-colors">Latest</a>
-                        <button onclick="openSuggestionModal()" class="suggestion-btn px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
+            <div id="mobileMenu" class="mobile-menu fixed left-0 top-0 w-72 h-full glass-modal md:hidden z-50">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="text-xl font-bold" style="color: var(--text-primary);">Menu</h3>
+                        <button id="closeMobileMenu" class="p-2 glass-button rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex flex-col space-y-6">
+                        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-lg font-medium p-3 rounded-lg hover:bg-gray-100 transition-colors" style="color: var(--text-primary);">
+                            🏠 Home
+                        </a>
+                        <a href="#latest" class="text-lg font-medium p-3 rounded-lg hover:bg-gray-100 transition-colors" style="color: var(--text-primary);">
+                            📰 Latest
+                        </a>
+                        <button onclick="openSuggestionModal()" class="suggestion-btn px-4 py-3 rounded-lg transition-all duration-200 font-semibold text-left">
                             💡 Suggestion
                         </button>
-                        <button onclick="openSubscribeModal()" class="youtube-subscribe px-4 py-2 rounded-lg transition-all duration-200 font-semibold">
-                            Subscribe
+                        <button onclick="openSubscribeModal()" class="youtube-subscribe px-4 py-3 rounded-lg transition-all duration-200 font-semibold text-left">
+                            📧 Subscribe
                         </button>
                     </div>
                 </div>
@@ -1409,9 +1487,10 @@
         </div>
     </section>
 
-    <!-- Top Ad Banner -->
-    <div class="container mx-auto px-4 py-6">
-        <div class="ad-container">
+    <!-- Top Ad Banner - Large -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="ad-container bg-gray-100 rounded-lg p-4 text-center">
+            <p class="text-xs text-gray-500 mb-2">Advertisement</p>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -1449,126 +1528,32 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
                 <!-- Dynamic Blog Posts will be inserted here -->
                 
-                <!-- Weekly Gaming News (Static fallback) -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer" onclick="window.open('weekly-gaming-news.html', '_blank')">
-                    <div class="h-48 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                        <span class="text-6xl">🎮</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">Gaming</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">1 hour ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Weekly Gaming News</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Your weekly roundup of the biggest gaming news, releases, and updates from the gaming world.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-purple-600 hover:text-purple-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- BGMI Tournament -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-                        <span class="text-6xl">🏆</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">Esports</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">3 hours ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">BGMI Masters Tournament: ₹2 Crore Prize Pool</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Krafton announces biggest BGMI tournament in India with top teams competing for massive prize pool and glory.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-orange-600 hover:text-orange-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- PlayStation 6 News -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                        <span class="text-6xl">🎯</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">Console</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">5 hours ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">PlayStation 6 Development Confirmed by Sony</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Sony confirms next-gen console is in development, promises revolutionary gaming experience with AI integration.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Free Fire Update -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-                        <span class="text-6xl">🔥</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">Mobile</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">6 hours ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Free Fire OB40 Update Brings New Character</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Garena releases major update with new character 'K' with unique abilities and revamped Bermuda map for better gameplay.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-yellow-600 hover:text-yellow-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Indian Gaming Market -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                        <span class="text-6xl">📈</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">Industry</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">8 hours ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Gaming Market Reaches ₹25,000 Crore</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Report shows massive growth in Indian gaming sector with mobile gaming leading the revolution across tier-2 and tier-3 cities.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-green-600 hover:text-green-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Esports Scholarships -->
-                <article class="blog-card glass-card rounded-xl overflow-hidden hover:scale-105 transition-transform cursor-pointer">
-                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                        <span class="text-6xl">🎓</span>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-3">
-                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">Education</span>
-                            <span class="text-sm ml-auto" style="color: var(--text-secondary);">12 hours ago</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3" style="color: var(--text-primary);">Indian Universities Offer Esports Scholarships</h3>
-                        <p class="mb-4" style="color: var(--text-secondary);">Multiple top universities introduce esports programs with full scholarships for talented gamers across India.</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm" style="color: var(--text-secondary);">By Respawn Daily</span>
-                            <button class="text-indigo-600 hover:text-indigo-700 font-semibold text-sm">Read More →</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
+                                
+                                
+                                
+                                
+                                
+                            </div>
         </div>
     </section>
 
-    <!-- Middle Ad Section -->
-    <div class="container mx-auto px-4 py-6">
-        <div class="ad-container">
+    <!-- Large Ad Section After Gaming News -->
+    <div class="container mx-auto px-4 py-10">
+        <div class="ad-container bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-6 text-center shadow-lg">
+            <p class="text-sm text-gray-600 mb-4 font-semibold">Advertisement</p>
+            <ins class="adsbygoogle"
+                 style="display:block; text-align:center;"
+                 data-ad-layout="in-article"
+                 data-ad-format="fluid"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"></ins>
+        </div>
+    </div>
+
+    <!-- Medium Ad Section -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="ad-container bg-white rounded-lg p-4 text-center border border-gray-300">
+            <p class="text-xs text-gray-500 mb-2">Advertisement</p>
             <ins class="adsbygoogle"
                  style="display:block; text-align:center;"
                  data-ad-layout="in-article"
@@ -1579,6 +1564,19 @@
     </div>
 
     
+    <!-- Small Ad Section Before Newsletter -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="ad-container bg-gray-50 rounded-lg p-3 text-center border border-gray-200">
+            <p class="text-xs text-gray-400 mb-1">Ad</p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
     <!-- Newsletter Section -->
     <section class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white relative overflow-hidden">
         <!-- Background decoration -->
@@ -1667,6 +1665,32 @@
             </div>
         </div>
     </section>
+
+    <!-- Large Ad Section After Newsletter -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="ad-container bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 text-center shadow-md border border-gray-200">
+            <p class="text-sm text-gray-600 mb-6 font-semibold">Advertisement</p>
+            <ins class="adsbygoogle"
+                 style="display:block; text-align:center;"
+                 data-ad-layout="in-article"
+                 data-ad-format="fluid"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"></ins>
+        </div>
+    </div>
+
+    <!-- Small Ad Section Before Footer -->
+    <div class="container mx-auto px-4 py-4">
+        <div class="ad-container bg-white rounded-lg p-2 text-center border border-gray-300">
+            <p class="text-xs text-gray-400 mb-1">Ad</p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12" style="background-color: var(--footer-bg); color: var(--footer-text);">
@@ -1817,7 +1841,7 @@
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Respawn Daily. All rights reserved.</p>
+                <p>&copy; 2026 Respawn Daily. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -3014,13 +3038,34 @@
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
         
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.add('active');
+            mobileMenuBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         });
         
         closeMobileMenu.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
+            mobileMenuBackdrop.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+        
+        // Close mobile menu when clicking outside or on backdrop
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBackdrop.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close mobile menu when clicking on backdrop
+        mobileMenuBackdrop.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuBackdrop.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
         
         // Close mobile menu when clicking on links
@@ -3028,6 +3073,8 @@
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
+                mobileMenuBackdrop.classList.remove('active');
+                document.body.style.overflow = 'auto';
             });
         });
         
@@ -3257,6 +3304,9 @@
                 }, 500);
             }
             
+            // Auto-clear all blogs for cleanup
+            autoClearBlogs();
+            
             // Load blog posts
             loadBlogPosts();
         });
@@ -3300,6 +3350,13 @@
                 loadBlogPosts();
                 showNotification('All blogs have been deleted!', 'success');
             }
+        }
+        
+        // Auto-clear all blogs on page load (for cleanup)
+        function autoClearBlogs() {
+            localStorage.removeItem('publishedBlogs');
+            localStorage.removeItem('blogDraft');
+            console.log('All blogs cleared automatically');
         }
         
         // Add loading animation for images
