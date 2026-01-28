@@ -870,6 +870,25 @@
             const email = document.getElementById('requestEmail').value.trim();
             const reason = document.getElementById('requestReason').value.trim();
             
+            // Validate inputs
+            if (!name || !email || !reason) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            submitBtn.disabled = true;
+            
             // Create request object
             const adminRequest = {
                 id: Date.now(),
@@ -882,19 +901,33 @@
                 userAgent: navigator.userAgent
             };
             
-            // Save to localStorage
-            let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
-            adminRequests.push(adminRequest);
-            localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
-            
-            // Show success message
-            showRequestSuccess();
-            
-            // Reset and hide form
-            document.querySelector('#adminRequestForm form').reset();
+            // Simulate sending request to server (in production, this would be an actual API call)
             setTimeout(() => {
-                toggleAdminRequest();
-            }, 2000);
+                try {
+                    // Save to localStorage (for demo purposes)
+                    let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+                    adminRequests.push(adminRequest);
+                    localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                    
+                    // Show success message
+                    showRequestSuccess();
+                    
+                    // Reset and hide form
+                    document.querySelector('#adminRequestForm form').reset();
+                    setTimeout(() => {
+                        toggleAdminRequest();
+                    }, 2000);
+                    
+                } catch (error) {
+                    // Handle error
+                    alert('There was an error processing your request. Please try again later.');
+                    console.error('Admin request error:', error);
+                } finally {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1500);
         }
 
         function showRequestSuccess() {
