@@ -1957,6 +1957,18 @@
                         </div>
                     </div>
                     
+                    <!-- Admin Requests Section -->
+                    <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer" onclick="openAdminRequestsManager()">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-shield text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2" style="color: var(--text-primary);">🛡️ Admin Requests</h4>
+                        <p class="text-sm" style="color: var(--text-secondary);">Review and manage admin access requests from users.</p>
+                        <div class="mt-4">
+                            <span id="adminRequestsBadge" class="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-semibold">0 Pending</span>
+                        </div>
+                    </div>
+                    
                     <!-- Manage Suggestions Section -->
                     <div class="glass-card p-6 rounded-lg hover:scale-105 transition-transform cursor-pointer" onclick="openSuggestionsManager()">
                         <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -2162,6 +2174,51 @@
                     <button onclick="saveDevImage()" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors">
                         Save Changes
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Requests Manager Modal -->
+    <div id="adminRequestsManagerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4" style="background-color: rgba(0, 0, 0, 0.95);">
+        <div class="rounded-xl max-w-6xl w-full max-h-[95vh] overflow-y-auto" style="background-color: var(--card-bg);">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold" style="color: #dc2626; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">🛡️ Admin Requests Management</h3>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="refreshAdminRequests()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm font-semibold">
+                            <i class="fas fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                        <button onclick="closeAdminRequestsManager()" style="color: #f59e0b;" class="hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Admin Requests Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="totalAdminRequests" style="color: var(--accent-color);">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Total Requests</div>
+                    </div>
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="pendingAdminRequests" style="color: #dc2626;">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Pending</div>
+                    </div>
+                    <div class="p-4 rounded-lg" style="background-color: var(--bg-secondary);">
+                        <div class="text-2xl font-bold" id="approvedAdminRequests" style="color: #16a34a;">0</div>
+                        <div class="text-sm" style="color: var(--text-secondary);">Approved</div>
+                    </div>
+                </div>
+                
+                <!-- Admin Requests List -->
+                <div id="adminRequestsList" class="space-y-4">
+                    <div class="text-center py-8" style="color: var(--text-secondary);">
+                        <i class="fas fa-user-shield text-4xl mb-4 opacity-50"></i>
+                        <p>No admin requests yet. When users request admin access, they will appear here.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2639,16 +2696,30 @@
         
         // Admin Panel Functions
         function openAdminPanel() {
-            // Check if user is logged in
+            // Check if admin is logged in
             const adminSession = localStorage.getItem('adminSession') || sessionStorage.getItem('adminSession');
             
-            if (adminSession === 'true') {
-                // User is logged in, open admin panel
+            if (adminSession) {
                 document.getElementById('adminPanelModal').classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
+                // Update admin requests badge
+                updateAdminRequestsBadge();
             } else {
                 // User is not logged in, redirect to login page
                 window.location.href = 'admin-login.html';
+            }
+        }
+        
+        function updateAdminRequestsBadge() {
+            const adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+            const pendingCount = adminRequests.filter(r => r.status === 'pending').length;
+            const badge = document.getElementById('adminRequestsBadge');
+            
+            if (badge) {
+                badge.textContent = `${pendingCount} Pending`;
+                badge.className = pendingCount > 0 ? 
+                    'inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-semibold animate-pulse' : 
+                    'inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold';
             }
         }
         
@@ -2666,6 +2737,157 @@
             closeAdminPanel();
         }
         
+        // Admin Requests Manager Functions
+        function openAdminRequestsManager() {
+            document.getElementById('adminRequestsManagerModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            loadAdminRequests();
+        }
+        
+        function closeAdminRequestsManager() {
+            document.getElementById('adminRequestsManagerModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function loadAdminRequests() {
+            const adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+            const adminRequestsList = document.getElementById('adminRequestsList');
+            
+            // Update stats
+            const stats = {
+                total: adminRequests.length,
+                pending: adminRequests.filter(r => r.status === 'pending').length,
+                approved: adminRequests.filter(r => r.status === 'approved').length
+            };
+            
+            document.getElementById('totalAdminRequests').textContent = stats.total;
+            document.getElementById('pendingAdminRequests').textContent = stats.pending;
+            document.getElementById('approvedAdminRequests').textContent = stats.approved;
+            
+            // Update badge
+            const badge = document.getElementById('adminRequestsBadge');
+            if (badge) {
+                badge.textContent = `${stats.pending} Pending`;
+                badge.className = stats.pending > 0 ? 
+                    'inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-semibold animate-pulse' : 
+                    'inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold';
+            }
+            
+            // Display requests
+            if (adminRequests.length === 0) {
+                adminRequestsList.innerHTML = `
+                    <div class="text-center py-8" style="color: var(--text-secondary);">
+                        <i class="fas fa-user-shield text-4xl mb-4 opacity-50"></i>
+                        <p>No admin requests yet. When users request admin access, they will appear here.</p>
+                    </div>
+                `;
+            } else {
+                adminRequestsList.innerHTML = adminRequests.map((request, index) => {
+                    const statusColors = {
+                        'pending': 'bg-yellow-100 text-yellow-600',
+                        'approved': 'bg-green-100 text-green-600',
+                        'rejected': 'bg-red-100 text-red-600'
+                    };
+                    
+                    const statusLabels = {
+                        'pending': 'Pending',
+                        'approved': 'Approved',
+                        'rejected': 'Rejected'
+                    };
+                    
+                    const requestedDate = new Date(request.requestedAt).toLocaleString();
+                    
+                    return `
+                        <div class="p-4 rounded-lg border" style="background-color: var(--bg-secondary); border-color: var(--glass-border);">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-lg" style="color: var(--text-primary);">${request.name}</h4>
+                                    <p class="text-sm" style="color: var(--text-secondary);">${request.email}</p>
+                                </div>
+                                <span class="px-2 py-1 rounded-full text-xs font-semibold ${statusColors[request.status]}">
+                                    ${statusLabels[request.status]}
+                                </span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <p class="text-sm" style="color: var(--text-secondary);">
+                                    <strong>Reason:</strong> ${request.reason}
+                                </p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <div class="text-xs" style="color: var(--text-tertiary);">
+                                    Requested: ${requestedDate}
+                                </div>
+                                <div class="flex space-x-2">
+                                    ${request.status === 'pending' ? `
+                                        <button onclick="approveAdminRequest(${index})" class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm">
+                                            <i class="fas fa-check mr-1"></i>Approve
+                                        </button>
+                                        <button onclick="rejectAdminRequest(${index})" class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors text-sm">
+                                            <i class="fas fa-times mr-1"></i>Reject
+                                        </button>
+                                    ` : ''}
+                                    <button onclick="deleteAdminRequest(${index})" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm">
+                                        <i class="fas fa-trash mr-1"></i>Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        function refreshAdminRequests() {
+            loadAdminRequests();
+            showNotification('Admin requests refreshed!', 'success');
+        }
+        
+        function approveAdminRequest(index) {
+            if (confirm('Approve this admin request? This will grant admin access to this user.')) {
+                let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+                adminRequests[index].status = 'approved';
+                adminRequests[index].approvedAt = new Date().toISOString();
+                localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                
+                // Add to approved admins list
+                let approvedAdmins = JSON.parse(localStorage.getItem('approvedAdmins') || '[]');
+                approvedAdmins.push({
+                    name: adminRequests[index].name,
+                    email: adminRequests[index].email,
+                    approvedAt: new Date().toISOString()
+                });
+                localStorage.setItem('approvedAdmins', JSON.stringify(approvedAdmins));
+                
+                loadAdminRequests();
+                showNotification('Admin request approved!', 'success');
+            }
+        }
+        
+        function rejectAdminRequest(index) {
+            if (confirm('Reject this admin request?')) {
+                let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+                adminRequests[index].status = 'rejected';
+                adminRequests[index].rejectedAt = new Date().toISOString();
+                localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                
+                loadAdminRequests();
+                showNotification('Admin request rejected!', 'success');
+            }
+        }
+        
+        function deleteAdminRequest(index) {
+            if (confirm('Delete this admin request permanently?')) {
+                let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+                adminRequests.splice(index, 1);
+                localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                
+                loadAdminRequests();
+                showNotification('Admin request deleted!', 'success');
+            }
+        }
+
         // Suggestions Manager Functions
         function openSuggestionsManager() {
             document.getElementById('suggestionsManagerModal').classList.remove('hidden');
@@ -2933,8 +3155,8 @@
         }
         
         function loadCurrentDevImage() {
-            const currentImage = localStorage.getItem('footerDevImage') || '';
-            const currentName = localStorage.getItem('footerDevName') || 'Site Developer';
+            const currentImage = localStorage.getItem('footerDevImage') || sessionStorage.getItem('footerDevImage') || '';
+            const currentName = localStorage.getItem('footerDevName') || sessionStorage.getItem('footerDevName') || 'Site Developer';
             const previewContainer = document.getElementById('currentDevImagePreview');
             const statusEl = document.getElementById('currentImageStatus');
             const nameDisplayEl = document.getElementById('currentDevNameDisplay');
@@ -2980,18 +3202,44 @@
         
         function clearDevImage() {
             if (confirm('Clear the developer image from footer?')) {
+                const oldImage = localStorage.getItem('footerDevImage') || sessionStorage.getItem('footerDevImage') || '';
                 localStorage.removeItem('footerDevImage');
+                sessionStorage.removeItem('footerDevImage');
                 loadCurrentDevImage();
                 updateFooterDevImage();
+                
+                // Trigger sync event
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'footerDevImage',
+                    newValue: '',
+                    oldValue: oldImage
+                }));
+                
+                // Update timestamp
+                localStorage.setItem('devInfo_last_updated', new Date().toISOString());
+                
                 showNotification('Developer image cleared!', 'success');
             }
         }
         
         function resetDevName() {
             if (confirm('Reset developer name to default?')) {
+                const oldName = localStorage.getItem('footerDevName') || sessionStorage.getItem('footerDevName') || 'Site Developer';
                 localStorage.removeItem('footerDevName');
+                sessionStorage.removeItem('footerDevName');
                 loadCurrentDevImage();
                 updateFooterDevName();
+                
+                // Trigger sync event
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'footerDevName',
+                    newValue: 'Site Developer',
+                    oldValue: oldName
+                }));
+                
+                // Update timestamp
+                localStorage.setItem('devInfo_last_updated', new Date().toISOString());
+                
                 showNotification('Developer name reset to default!', 'success');
             }
         }
@@ -3022,23 +3270,52 @@
             // Save name if provided
             if (developerName) {
                 localStorage.setItem('footerDevName', developerName);
+                sessionStorage.setItem('footerDevName', developerName);
                 updateFooterDevName();
                 hasChanges = true;
+                
+                // Trigger sync event for name
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'footerDevName',
+                    newValue: developerName,
+                    oldValue: localStorage.getItem('footerDevName') || 'Site Developer'
+                }));
             }
             
             // Save image if provided
             if (url) {
                 localStorage.setItem('footerDevImage', url);
+                sessionStorage.setItem('footerDevImage', url);
                 updateFooterDevImage();
                 hasChanges = true;
+                
+                // Trigger sync event for image
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'footerDevImage',
+                    newValue: url,
+                    oldValue: localStorage.getItem('footerDevImage') || ''
+                }));
             } else if (fileInput.files.length > 0) {
                 // Handle file upload (convert to base64)
                 const file = fileInput.files[0];
                 const reader = new FileReader();
                 
                 reader.onload = function(e) {
-                    localStorage.setItem('footerDevImage', e.target.result);
+                    const imageData = e.target.result;
+                    localStorage.setItem('footerDevImage', imageData);
+                    sessionStorage.setItem('footerDevImage', imageData);
                     updateFooterDevImage();
+                    
+                    // Trigger sync event for image
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: 'footerDevImage',
+                        newValue: imageData,
+                        oldValue: localStorage.getItem('footerDevImage') || ''
+                    }));
+                    
+                    // Update timestamp for sync
+                    localStorage.setItem('devInfo_last_updated', new Date().toISOString());
+                    
                     showNotification('Developer info updated successfully!', 'success');
                     closeDevImageManager();
                 };
@@ -3048,6 +3325,8 @@
             }
             
             if (hasChanges) {
+                // Update timestamp for sync
+                localStorage.setItem('devInfo_last_updated', new Date().toISOString());
                 showNotification('Developer info updated successfully!', 'success');
                 closeDevImageManager();
             } else {
@@ -3057,7 +3336,7 @@
         
         function updateFooterDevImage() {
             const footerContainer = document.getElementById('footerDevImageContainer');
-            const currentImage = localStorage.getItem('footerDevImage') || '';
+            const currentImage = localStorage.getItem('footerDevImage') || sessionStorage.getItem('footerDevImage') || '';
             
             if (currentImage && currentImage !== '') {
                 footerContainer.innerHTML = `<img src="${currentImage}" alt="Developer" class="w-full h-full rounded-full object-cover">`;
@@ -3072,7 +3351,7 @@
         
         function updateFooterDevName() {
             const footerNameEl = document.getElementById('footerDevName');
-            const currentName = localStorage.getItem('footerDevName') || 'Site Developer';
+            const currentName = localStorage.getItem('footerDevName') || sessionStorage.getItem('footerDevName') || 'Site Developer';
             
             if (footerNameEl) {
                 footerNameEl.textContent = currentName;
@@ -3568,6 +3847,14 @@
                 console.log('Storage event detected - reloading suggestions');
                 loadSuggestions();
                 showNotification('🔄 New suggestions detected!', 'info');
+            } else if (e.key === 'footerDevImage') {
+                console.log('Storage event detected - updating developer image');
+                updateFooterDevImage();
+                showNotification('👤 Developer image updated!', 'info');
+            } else if (e.key === 'footerDevName') {
+                console.log('Storage event detected - updating developer name');
+                updateFooterDevName();
+                showNotification('👤 Developer name updated!', 'info');
             }
         });
         
@@ -3606,6 +3893,23 @@
         
         // Start auto-sync polling
         setInterval(autoSyncSuggestions, SYNC_INTERVAL);
+        
+        // Auto-sync function for developer info
+        function autoSyncDevInfo() {
+            const currentDevSyncTime = localStorage.getItem('devInfo_last_updated');
+            
+            if (currentDevSyncTime && new Date(currentDevSyncTime).getTime() > lastDevSyncTime) {
+                console.log('Auto-sync detected developer info changes');
+                updateFooterDevImage();
+                updateFooterDevName();
+                
+                showNotification('👤 Developer info synchronized!', 'success');
+                lastDevSyncTime = new Date(currentDevSyncTime).getTime();
+            }
+        }
+        
+        let lastDevSyncTime = Date.now();
+        setInterval(autoSyncDevInfo, SYNC_INTERVAL);
         
         // Simulate external suggestion submissions (for demo purposes)
         function simulateExternalSuggestion() {

@@ -760,13 +760,24 @@
             
             // Simulate authentication (replace with actual authentication)
             setTimeout(() => {
-                // Default admin credentials (in production, use proper authentication)
-                const validCredentials = {
-                    // Username format
-                    'amit1920': 'amitsreeya1920'
-                };
+                // In production, replace this with proper server-side authentication
+                // For demo purposes, check against stored admin credentials
+                const approvedAdmins = JSON.parse(localStorage.getItem('approvedAdmins') || '[]');
+                const defaultAdmin = { email: 'admin', password: 'admin123' }; // Default fallback
                 
-                if (validCredentials[email] && validCredentials[email] === password) {
+                let isValid = false;
+                
+                // Check against approved admins first
+                if (approvedAdmins.length > 0) {
+                    isValid = approvedAdmins.some(admin => admin.email === email && admin.password === password);
+                }
+                
+                // Fallback to default admin for initial setup
+                if (!isValid && email === 'admin' && password === 'admin123') {
+                    isValid = true;
+                }
+                
+                if (isValid) {
                     // Success
                     successMessage.classList.add('show');
                     
@@ -807,7 +818,7 @@
 
         // Show Help
         function showHelp() {
-            alert('Admin Login Credentials:\n\nUsername: amit1920\nPassword: amitsreeya1920\n\nNote: Please keep these credentials secure!');
+            alert('Admin Login Help:\n\n• For approved admins: Use your assigned credentials\n• If you forgot your credentials, contact the site administrator\n• For security reasons, default credentials are not displayed here\n\nNote: If you need admin access, use the "Request Admin Access" option below.');
         }
 
         // Add keyboard shortcuts
@@ -840,6 +851,78 @@
                 this.style.borderColor = '';
             }
         });
+
+        // Admin Request Functions
+        function toggleAdminRequest() {
+            const requestForm = document.getElementById('adminRequestForm');
+            requestForm.classList.toggle('hidden');
+            
+            // Clear form when hiding
+            if (requestForm.classList.contains('hidden')) {
+                document.querySelector('#adminRequestForm form').reset();
+            }
+        }
+
+        function submitAdminRequest(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('requestName').value.trim();
+            const email = document.getElementById('requestEmail').value.trim();
+            const reason = document.getElementById('requestReason').value.trim();
+            
+            // Create request object
+            const adminRequest = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                reason: reason,
+                status: 'pending',
+                requestedAt: new Date().toISOString(),
+                ipAddress: '127.0.0.1', // In production, get real IP
+                userAgent: navigator.userAgent
+            };
+            
+            // Save to localStorage
+            let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+            adminRequests.push(adminRequest);
+            localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+            
+            // Show success message
+            showRequestSuccess();
+            
+            // Reset and hide form
+            document.querySelector('#adminRequestForm form').reset();
+            setTimeout(() => {
+                toggleAdminRequest();
+            }, 2000);
+        }
+
+        function showRequestSuccess() {
+            // Create success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            successDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>Admin request submitted successfully!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(successDiv);
+            
+            // Slide in
+            setTimeout(() => {
+                successDiv.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                successDiv.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(successDiv);
+                }, 300);
+            }, 5000);
+        }
     </script>
 </body>
 </html>
