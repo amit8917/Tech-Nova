@@ -2750,14 +2750,28 @@
         }
         
         function loadAdminRequests() {
-            const adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+            // Try to load from both localStorage and sessionStorage for real-time sync
+            let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+            const sessionRequests = JSON.parse(sessionStorage.getItem('adminRequests') || '[]');
+            
+            // Merge requests from both storage types
+            const allRequests = [...adminRequests, ...sessionRequests];
+            
+            // Remove duplicates based on ID and timestamp
+            const uniqueRequests = allRequests.filter((request, index, self) =>
+                index === self.findIndex((r) => r.id === request.id && r.requestedAt === request.requestedAt)
+            );
+            
+            // Sort by requested date (newest first)
+            uniqueRequests.sort((a, b) => new Date(b.requestedAt) - new Date(a.requestedAt));
+            
             const adminRequestsList = document.getElementById('adminRequestsList');
             
             // Update stats
             const stats = {
-                total: adminRequests.length,
-                pending: adminRequests.filter(r => r.status === 'pending').length,
-                approved: adminRequests.filter(r => r.status === 'approved').length
+                total: uniqueRequests.length,
+                pending: uniqueRequests.filter(r => r.status === 'pending').length,
+                approved: uniqueRequests.filter(r => r.status === 'approved').length
             };
             
             document.getElementById('totalAdminRequests').textContent = stats.total;
@@ -2774,7 +2788,7 @@
             }
             
             // Display requests
-            if (adminRequests.length === 0) {
+            if (uniqueRequests.length === 0) {
                 adminRequestsList.innerHTML = `
                     <div class="text-center py-8" style="color: var(--text-secondary);">
                         <i class="fas fa-user-shield text-4xl mb-4 opacity-50"></i>
@@ -2782,7 +2796,7 @@
                     </div>
                 `;
             } else {
-                adminRequestsList.innerHTML = adminRequests.map((request, index) => {
+                adminRequestsList.innerHTML = uniqueRequests.map((request, index) => {
                     const statusColors = {
                         'pending': 'bg-yellow-100 text-yellow-600',
                         'approved': 'bg-green-100 text-green-600',
@@ -2850,6 +2864,7 @@
                 adminRequests[index].status = 'approved';
                 adminRequests[index].approvedAt = new Date().toISOString();
                 localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                sessionStorage.setItem('adminRequests', JSON.stringify(adminRequests));
                 
                 // Add to approved admins list
                 let approvedAdmins = JSON.parse(localStorage.getItem('approvedAdmins') || '[]');
@@ -2859,6 +2874,17 @@
                     approvedAt: new Date().toISOString()
                 });
                 localStorage.setItem('approvedAdmins', JSON.stringify(approvedAdmins));
+                sessionStorage.setItem('approvedAdmins', JSON.stringify(approvedAdmins));
+                
+                // Update timestamp for sync
+                localStorage.setItem('adminRequests_last_updated', new Date().toISOString());
+                
+                // Trigger storage event for immediate sync
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'adminRequests',
+                    newValue: JSON.stringify(adminRequests),
+                    oldValue: JSON.stringify(adminRequests.map(r => ({...r, status: 'pending'})))
+                }));
                 
                 loadAdminRequests();
                 showNotification('Admin request approved!', 'success');
@@ -2871,6 +2897,17 @@
                 adminRequests[index].status = 'rejected';
                 adminRequests[index].rejectedAt = new Date().toISOString();
                 localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                sessionStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                
+                // Update timestamp for sync
+                localStorage.setItem('adminRequests_last_updated', new Date().toISOString());
+                
+                // Trigger storage event for immediate sync
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'adminRequests',
+                    newValue: JSON.stringify(adminRequests),
+                    oldValue: JSON.stringify(adminRequests.map(r => ({...r, status: 'pending'})))
+                }));
                 
                 loadAdminRequests();
                 showNotification('Admin request rejected!', 'success');
@@ -2880,8 +2917,20 @@
         function deleteAdminRequest(index) {
             if (confirm('Delete this admin request permanently?')) {
                 let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
+                const deletedRequest = adminRequests[index];
                 adminRequests.splice(index, 1);
                 localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                sessionStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                
+                // Update timestamp for sync
+                localStorage.setItem('adminRequests_last_updated', new Date().toISOString());
+                
+                // Trigger storage event for immediate sync
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'adminRequests',
+                    newValue: JSON.stringify(adminRequests),
+                    oldValue: JSON.stringify([...adminRequests, deletedRequest])
+                }));
                 
                 loadAdminRequests();
                 showNotification('Admin request deleted!', 'success');
@@ -3855,6 +3904,10 @@
                 console.log('Storage event detected - updating developer name');
                 updateFooterDevName();
                 showNotification('👤 Developer name updated!', 'info');
+            } else if (e.key === 'adminRequests') {
+                console.log('Storage event detected - reloading admin requests');
+                loadAdminRequests();
+                showNotification('🛡️ Admin requests updated!', 'info');
             }
         });
         
@@ -3910,6 +3963,23 @@
         
         let lastDevSyncTime = Date.now();
         setInterval(autoSyncDevInfo, SYNC_INTERVAL);
+        
+        // Auto-sync function for admin requests
+        function autoSyncAdminRequests() {
+            const currentAdminSyncTime = localStorage.getItem('adminRequests_last_updated');
+            
+            if (currentAdminSyncTime && new Date(currentAdminSyncTime).getTime() > lastAdminSyncTime) {
+                console.log('Auto-sync detected admin requests changes');
+                loadAdminRequests();
+                updateAdminRequestsBadge();
+                
+                showNotification('🛡️ Admin requests synchronized!', 'success');
+                lastAdminSyncTime = new Date(currentAdminSyncTime).getTime();
+            }
+        }
+        
+        let lastAdminSyncTime = Date.now();
+        setInterval(autoSyncAdminRequests, SYNC_INTERVAL);
         
         // Simulate external suggestion submissions (for demo purposes)
         function simulateExternalSuggestion() {

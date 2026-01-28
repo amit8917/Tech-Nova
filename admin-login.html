@@ -904,10 +904,21 @@
             // Simulate sending request to server (in production, this would be an actual API call)
             setTimeout(() => {
                 try {
-                    // Save to localStorage (for demo purposes)
+                    // Save to both localStorage and sessionStorage (for real-time sync)
                     let adminRequests = JSON.parse(localStorage.getItem('adminRequests') || '[]');
                     adminRequests.push(adminRequest);
                     localStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                    sessionStorage.setItem('adminRequests', JSON.stringify(adminRequests));
+                    
+                    // Update timestamp for sync
+                    localStorage.setItem('adminRequests_last_updated', new Date().toISOString());
+                    
+                    // Trigger storage event for immediate sync
+                    window.dispatchEvent(new StorageEvent('storage', {
+                        key: 'adminRequests',
+                        newValue: JSON.stringify(adminRequests),
+                        oldValue: JSON.stringify(adminRequests.slice(0, -1))
+                    }));
                     
                     // Show success message
                     showRequestSuccess();
