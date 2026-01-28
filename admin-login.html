@@ -767,14 +767,14 @@
                 
                 let isValid = false;
                 
-                // Check against approved admins first
-                if (approvedAdmins.length > 0) {
-                    isValid = approvedAdmins.some(admin => admin.email === email && admin.password === password);
+                // Check against default admin first
+                if (email === 'admin' && password === 'admin123') {
+                    isValid = true;
                 }
                 
-                // Fallback to default admin for initial setup
-                if (!isValid && email === 'admin' && password === 'admin123') {
-                    isValid = true;
+                // Check against approved admins if not default admin
+                if (!isValid && approvedAdmins.length > 0) {
+                    isValid = approvedAdmins.some(admin => admin.email === email && admin.password === password);
                 }
                 
                 if (isValid) {
